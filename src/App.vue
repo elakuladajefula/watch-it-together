@@ -1,26 +1,93 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+  import AppHeader from './components/AppHeader.vue'
+  import ShowTemplate from './components/ShowTemplate.vue'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  export default 
+  {
+    name: 'App',
+    components: 
+    {
+      AppHeader,
+      ShowTemplate,
+    },
   }
-}
 </script>
 
+<template>
+  <v-app>
+    <AppHeader></AppHeader>
+    <div class="pageTitle">My shows</div>
+    <div class="showsContainer">
+      <ShowTemplate 
+        title="Game of thrones"
+        seasons="8"
+        firstEpisode="17.04.2011"
+        source="../assets/game-of-thrones.jpg"/>
+      <ShowTemplate 
+        title="Game of thrones"
+        seasons="8"
+        firstEpisode="17.04.2011"
+        source="../assets/game-of-thrones.jpg"/>
+      <ShowTemplate 
+        title="Game of thrones"
+        seasons="8"
+        firstEpisode="17.04.2011"
+        source="../assets/game-of-thrones.jpg"/>
+      <ShowTemplate 
+        title="Game of thrones"
+        seasons="8"
+        firstEpisode="17.04.2011"
+        source="../assets/game-of-thrones.jpg"/>
+      <ShowTemplate 
+        title="Game of thrones"
+        seasons="8"
+        firstEpisode="17.04.2011"
+        source="../assets/game-of-thrones.jpg"/>
+      <ShowTemplate 
+        title="Game of thrones"
+        seasons="8"
+        firstEpisode="17.04.2011"
+        source="../assets/game-of-thrones.jpg"/>
+      <ShowTemplate 
+        title="Game of thrones"
+        seasons="8"
+        firstEpisode="17.04.2011"
+        source="../assets/game-of-thrones.jpg"/>
+      <ShowTemplate 
+        title="Game of thrones"
+        seasons="8"
+        firstEpisode="17.04.2011"
+        source="require('.//assets/game-of-thrones.jpg')"/>
+    </div>
+  </v-app>
+</template>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  .v-application 
+  {
+    background-color: rgba(255, 246, 147, 0.35);
+  }
+
+  body 
+  {
+    margin: 0;
+  }
+
+  .pageTitle
+  {
+    padding-left: 20px;
+  }
+
+  .icon 
+  {
+    margin: 10px;
+    height: 42px;
+  }
+
+  .showsContainer 
+  {
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+  }
 </style>

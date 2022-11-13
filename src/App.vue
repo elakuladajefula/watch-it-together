@@ -1,6 +1,10 @@
 <script>
   import AppHeader from './components/AppHeader.vue'
-  import ShowTemplate from './components/ShowTemplate.vue'
+  import MyShows from './pages/MyShows.vue'
+  import MyFriends from './pages/MyFriends.vue'
+  import SearchFriends from './pages/SearchFriends.vue'
+  import SearchShows from './pages/SearchShows.vue'
+  import ProfileSettings from './pages/ProfileSettings.vue'
 
   export default 
   {
@@ -8,57 +12,43 @@
     components: 
     {
       AppHeader,
-      ShowTemplate,
     },
+    data() 
+    {
+      return {
+        currentPath: window.location.hash
+      }
+    },
+    computed: 
+    {
+      currentView() 
+      {
+        return routes[this.currentPath.slice(1) || '/']
+      }
+    },
+    mounted() 
+    {
+      window.addEventListener('hashchange', () => 
+      {
+        this.currentPath = window.location.hash
+      })
+    },
+  }
+
+  const routes = 
+  {
+    '/': MyShows,
+    '/my-friends': MyFriends,
+    '/search-friends': SearchFriends,
+    '/search-shows': SearchShows,
+    '/profile-settings': ProfileSettings,
   }
 </script>
 
 <template>
   <v-app>
     <AppHeader></AppHeader>
-    <div class="pageTitle">My shows</div>
-    <div class="showsContainer">
-      <ShowTemplate 
-        title="Game of thrones"
-        seasons="8"
-        firstEpisode="17.04.2011"
-        source="../assets/game-of-thrones.jpg"/>
-      <ShowTemplate 
-        title="Game of thrones"
-        seasons="8"
-        firstEpisode="17.04.2011"
-        source="../assets/game-of-thrones.jpg"/>
-      <ShowTemplate 
-        title="Game of thrones"
-        seasons="8"
-        firstEpisode="17.04.2011"
-        source="../assets/game-of-thrones.jpg"/>
-      <ShowTemplate 
-        title="Game of thrones"
-        seasons="8"
-        firstEpisode="17.04.2011"
-        source="../assets/game-of-thrones.jpg"/>
-      <ShowTemplate 
-        title="Game of thrones"
-        seasons="8"
-        firstEpisode="17.04.2011"
-        source="../assets/game-of-thrones.jpg"/>
-      <ShowTemplate 
-        title="Game of thrones"
-        seasons="8"
-        firstEpisode="17.04.2011"
-        source="../assets/game-of-thrones.jpg"/>
-      <ShowTemplate 
-        title="Game of thrones"
-        seasons="8"
-        firstEpisode="17.04.2011"
-        source="../assets/game-of-thrones.jpg"/>
-      <ShowTemplate 
-        title="Game of thrones"
-        seasons="8"
-        firstEpisode="17.04.2011"
-        source="require('.//assets/game-of-thrones.jpg')"/>
-    </div>
+    <component :is="currentView" />
   </v-app>
 </template>
 
@@ -71,23 +61,5 @@
   body 
   {
     margin: 0;
-  }
-
-  .pageTitle
-  {
-    padding-left: 20px;
-  }
-
-  .icon 
-  {
-    margin: 10px;
-    height: 42px;
-  }
-
-  .showsContainer 
-  {
-    padding: 10px;
-    display: flex;
-    flex-wrap: wrap;
   }
 </style>

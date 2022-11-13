@@ -6,11 +6,11 @@
         ({
             menuItems: 
             [
-                { title: 'My shows' },
-                { title: 'My friends' },
-                { title: 'Search shows' },
-                { title: 'Search friends' },
-                { title: 'Profile settings' },
+                { title: 'My shows', link:'#/' },
+                { title: 'My friends', link:'#/my-friends' },
+                { title: 'Search shows', link:'#/search-shows' },
+                { title: 'Search friends', link:'#/search-friends' },
+                { title: 'Profile settings', link:'#/profile-settings' },
             ],
         }),
     }
@@ -28,7 +28,7 @@
         </template>
         
         <v-list>
-          <v-list-item v-for="(item, i) in menuItems" :key="i">
+          <v-list-item :href="item.link" v-for="(item, i) in menuItems" :key="i">
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
         </v-list>

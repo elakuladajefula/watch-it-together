@@ -61,6 +61,10 @@
   .pageTitle
   {
     padding-left: 20px;
+    font-size: 60px;
+    margin-right: 68px;
+    text-align: center;
+    padding-top: 15px;
   }
 
   .showsContainer 

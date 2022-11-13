@@ -1,3 +1,3 @@
 <template>
-    <div>search friends</div>
+    <div class="pageTitle">Search friends</div>
 </template>

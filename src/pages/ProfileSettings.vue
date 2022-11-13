@@ -1,3 +1,3 @@
 <template>
-    <div>profile settings</div>
+    <div class="pageTitle">Profile settings</div>
 </template>

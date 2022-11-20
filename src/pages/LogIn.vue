@@ -1,7 +1,16 @@
+<script>
+    export default
+    {
+        name: 'LogIn',
+        emits: [ "logIn" ],
+    }
+</script>
+
 <template>
     <div class="subpage">
         <div class="pageTitle">Log in</div>
-        <v-btn @click="$emit('logIn')" outlined class="formBtn">Log in</v-btn>
+        <v-btn @click="$emit('logIn')" :href="'#/my-shows'" outlined class="formBtn">Log in</v-btn>
+        <v-btn :href="'#/register'" outlined class="formBtn">Register</v-btn>
     </div>
 </template>
 
@@ -15,5 +24,6 @@
     {
         width: auto;
         max-width: 100px;
+        margin: 10px;
     }
 </style>

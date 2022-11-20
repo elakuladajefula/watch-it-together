@@ -5,6 +5,8 @@
   import SearchFriends from './pages/SearchFriends.vue'
   import SearchShows from './pages/SearchShows.vue'
   import ProfileSettings from './pages/ProfileSettings.vue'
+  import LogIn from './pages/LogIn.vue'
+  import RegisterUser from './pages/RegisterUser.vue'
 
   export default 
   {
@@ -16,7 +18,8 @@
     data() 
     {
       return {
-        currentPath: window.location.hash
+        currentPath: window.location.hash,
+        displayMenu: false,
       }
     },
     computed: 
@@ -33,11 +36,20 @@
         this.currentPath = window.location.hash
       })
     },
+    methods: 
+    {
+      showMenu() 
+      {
+        this.displayMenu = true;
+      }
+    }
   }
 
   const routes = 
   {
-    '/': MyShows,
+    '/': LogIn,
+    '/register': RegisterUser,
+    '/my-shows': MyShows,
     '/my-friends': MyFriends,
     '/search-friends': SearchFriends,
     '/search-shows': SearchShows,
@@ -47,8 +59,8 @@
 
 <template>
   <v-app>
-    <AppHeader></AppHeader>
-    <component :is="currentView" />
+    <AppHeader :display="displayMenu"></AppHeader>
+    <component :is="currentView" @log-in='showMenu()'/>
   </v-app>
 </template>
 

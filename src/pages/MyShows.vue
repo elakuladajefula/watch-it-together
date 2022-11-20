@@ -60,11 +60,10 @@
 <style>
   .pageTitle
   {
-    padding-left: 20px;
     font-size: 60px;
-    margin-right: 68px;
     text-align: center;
     padding-top: 15px;
+    padding-bottom: 25px;
   }
 
   .showsContainer 

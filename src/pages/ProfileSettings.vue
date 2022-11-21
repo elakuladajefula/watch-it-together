@@ -61,7 +61,6 @@
                 :disabled="!valid"
                 @click="$emit('changePassword')"
                 class="formBtn"
-                :href="'#/search-shows'"
             >
                 Save changes
             </v-btn>

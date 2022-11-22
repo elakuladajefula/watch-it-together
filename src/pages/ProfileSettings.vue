@@ -24,6 +24,13 @@
                 v => !!v || 'Repeat new password',
             ],
         }),
+        computed: 
+        {
+            passwordConfirmationRule() 
+            {
+                return () => (this.newPassword === this.repeatNewPassword) || 'Password must match'
+            },
+        }
     }
 </script>
 
@@ -52,7 +59,7 @@
             <v-text-field
                 v-model="repeatNewPassword"
                 :counter="30"
-                :rules="repeatNewPasswordRules"
+                :rules="repeatNewPasswordRules.concat(passwordConfirmationRule)" 
                 label="Repeat new password"
                 required
             ></v-text-field>

@@ -16,7 +16,15 @@
             [
                 v => !!v || 'Password is required',
             ],
+            inputType: 'password',
         }),
+        methods: 
+        {
+            ToggleInput()
+            {
+                this.inputType = this.inputType === 'password' ? 'text' : 'password';
+            }
+        }
     }
 </script>
 
@@ -39,7 +47,12 @@
                 :rules="passwordRules"
                 label="Password"
                 required
+                :type="inputType"
             ></v-text-field>
+            <v-btn class="input-group-text" @click.prevent="ToggleInput">
+                <i v-if="inputType === 'password'" class="fas fa-eye"></i>
+                <i v-else class="fas fa-eye-slash"></i>
+            </v-btn>
     
             <v-btn
                 :disabled="!valid"

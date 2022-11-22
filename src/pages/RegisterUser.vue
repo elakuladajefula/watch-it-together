@@ -1,4 +1,5 @@
 <script>
+    // import { mdiEye } from '@mdi/js';
     export default
     {
         name: 'RegisterUser',
@@ -27,8 +28,19 @@
             ToggleInput()
             {
                 this.inputType = this.inputType === 'password' ? 'text' : 'password';
-            }
-        }
+            },
+            getIcon(type)
+            {
+                if (type === 'password')
+                {
+                    return 'mdi-eye';
+                }
+                else
+                {
+                    return 'mdi-eye-off';
+                }
+            },
+        },
     }
 </script>
 
@@ -43,6 +55,7 @@
                 :rules="loginRules"
                 label="Login"
                 required
+                clearable
             ></v-text-field>
     
             <v-text-field
@@ -52,11 +65,10 @@
                 label="Password"
                 required
                 :type="inputType"
+                clearable
+                :append-icon="getIcon(inputType)"
+                @click:append="ToggleInput"
             ></v-text-field>
-            <v-btn class="input-group-text" @click.prevent="ToggleInput">
-                <i v-if="inputType === 'password'" class="fas fa-eye"></i>
-                <i v-else class="fas fa-eye-slash"></i>
-            </v-btn>
     
             <v-btn
                 :disabled="!valid"

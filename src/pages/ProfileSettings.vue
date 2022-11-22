@@ -23,6 +23,9 @@
             [
                 v => !!v || 'Repeat new password',
             ],
+            inputType1: 'password',
+            inputType2: 'password',
+            inputType3: 'password',
         }),
         computed: 
         {
@@ -30,7 +33,33 @@
             {
                 return () => (this.newPassword === this.repeatNewPassword) || 'Password must match'
             },
-        }
+        },
+        methods: 
+        {
+            ToggleInput1()
+            {
+                this.inputType1 = this.inputType1 === 'password' ? 'text' : 'password';
+            },
+            ToggleInput2()
+            {
+                this.inputType2 = this.inputType2 === 'password' ? 'text' : 'password';
+            },
+            ToggleInput3()
+            {
+                this.inputType3 = this.inputType3 === 'password' ? 'text' : 'password';
+            },
+            getIcon(type)
+            {
+                if (type === 'password')
+                {
+                    return 'mdi-eye';
+                }
+                else
+                {
+                    return 'mdi-eye-off';
+                }
+            },
+        },
     }
 </script>
 
@@ -46,7 +75,13 @@
                 :rules="oldPasswordRules"
                 label="Old password"
                 required
-            ></v-text-field>
+                :type="inputType1"
+                clearable
+                :append-icon="getIcon(inputType1)"
+                @click:append="ToggleInput1"
+            >
+            </v-text-field>
+            
     
             <v-text-field
                 v-model="newPassword"
@@ -54,6 +89,10 @@
                 :rules="newPasswordRules"
                 label="New password"
                 required
+                :type="inputType2"
+                clearable
+                :append-icon="getIcon(inputType2)"
+                @click:append="ToggleInput2"
             ></v-text-field>
 
             <v-text-field
@@ -62,6 +101,10 @@
                 :rules="repeatNewPasswordRules.concat(passwordConfirmationRule)" 
                 label="Repeat new password"
                 required
+                :type="inputType3"
+                clearable
+                :append-icon="getIcon(inputType3)"
+                @click:append="ToggleInput3"
             ></v-text-field>
     
             <v-btn

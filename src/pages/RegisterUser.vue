@@ -1,5 +1,4 @@
 <script>
-    // import { mdiEye } from '@mdi/js';
     export default
     {
         name: 'RegisterUser',

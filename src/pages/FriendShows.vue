@@ -3,7 +3,7 @@
 
   export default 
   {
-    name: 'MyShows',
+    name: 'FriendShows',
     components: 
     {
       ShowTemplate,
@@ -12,7 +12,7 @@
 </script>
 
 <template>
-    <div class="pageTitle">My shows</div>
+    <div class="pageTitle">Shows</div>
     <div class="showsContainer">
       <ShowTemplate 
         title="Game of thrones"
@@ -56,20 +56,3 @@
         source="require('.//assets/game-of-thrones.jpg')"/>
     </div>
 </template>
-
-<style>
-  .pageTitle
-  {
-    font-size: 60px;
-    text-align: center;
-    padding-top: 15px;
-    padding-bottom: 15px;
-  }
-
-  .showsContainer 
-  {
-    padding: 10px;
-    display: flex;
-    flex-wrap: wrap;
-  }
-</style>

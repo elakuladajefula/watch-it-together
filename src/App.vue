@@ -7,7 +7,6 @@
   import ProfileSettings from './pages/ProfileSettings.vue'
   import LogIn from './pages/LogIn.vue'
   import RegisterUser from './pages/RegisterUser.vue'
-  import FriendShows from './pages/FriendShows.vue'
 
   export default 
   {
@@ -21,7 +20,6 @@
       return {
         currentPath: window.location.hash,
         displayMenu: false,
-        chosenFriend: '/',
       }
     },
     computed: 
@@ -40,10 +38,6 @@
     },
     methods: 
     {
-      chooseFriend(friend)
-      {
-        this.chosenFriend = friend;
-      },
       showMenu() 
       {
         this.displayMenu = true;
@@ -64,14 +58,13 @@
     '/search-friends': SearchFriends,
     '/search-shows': SearchShows,
     '/profile-settings': ProfileSettings,
-    chosenFriend: FriendShows,
   }
 </script>
 
 <template>
   <v-app>
     <AppHeader :display="displayMenu" @log-out='hideMenu()'></AppHeader>
-    <component :is="currentView" @log-in='showMenu()' @friend-click='(friend) => chooseFriend(friend)'/>
+    <component :is="currentView" @log-in='showMenu()'/>
   </v-app>
 </template>
 

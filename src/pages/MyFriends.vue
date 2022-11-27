@@ -18,7 +18,12 @@
                 {name: 'friend8'},
                 {name: 'friend9'},
             ],
+            chosen: [],
         }),
+        computed: 
+        {
+            isEmpty: ({ chosen }) => chosen.length === 0,
+        },
         methods:
         {
             chooseFriend(friend)
@@ -34,15 +39,28 @@
         <div class="pageTitle">My friends</div>
         <v-card class="friendsListCard">
             <v-list class="friendsList">
-                <template v-for="(friend, i) in friendsList" :key="i">
-                    <v-list-item class="friend" :href="'#/' + friend.name" @click="chooseFriend(friend.name)">
-                        <v-list-item-content>
-                            <v-list-item-title>{{ friend.name }}</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </template>
+                <v-list-item-group multiple class="friendsListGroup">
+                    <template v-for="(friend, i) in friendsList" :key="i">
+                        <v-list-item :value="friend.name" class="friend" :href="'#/' + friend.name" @click="chooseFriend(friend.name)">
+                            <v-list-item-action>
+                                <v-checkbox :value="friend.name" v-model="chosen"/>
+                            </v-list-item-action>
+                            <v-list-item-content>
+                                <v-list-item-title>{{ friend.name }}</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </template>
+                </v-list-item-group>
             </v-list> 
         </v-card>
+        <v-btn
+            :disabled="isEmpty"
+            @click="$emit('chooseShows')"
+            class="formBtn"
+            :href="'#/choose-shows'"
+        >
+            Choose shows
+        </v-btn>
     </div>
 </template>
 
@@ -57,6 +75,10 @@
         display: flex;
         flex-wrap: wrap;
     }
+    .friendsListGroup, .v-list-item__content
+    {
+        display: contents;
+    }
     .friend
     {
         position: relative;
@@ -65,5 +87,9 @@
     .friend:hover
     {
         background-color: aliceblue;
+    }
+    .v-input__details
+    {
+        display: none;
     }
 </style>

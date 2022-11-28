@@ -45,7 +45,7 @@
       hideMenu() 
       {
         this.displayMenu = false;
-      }
+      },
     }
   }
 
@@ -63,7 +63,7 @@
 
 <template>
   <v-app>
-    <AppHeader :display="displayMenu" @log-out='hideMenu()'></AppHeader>
+    <AppHeader :display="displayMenu" @log-out='hideMenu()'/>
     <component :is="currentView" @log-in='showMenu()'/>
   </v-app>
 </template>

@@ -1,8 +1,12 @@
 <script>
+    import MyPopup from '../components/MyPopup';
     export default
     {
         name: 'ProfileSettings',
-        emits: [ "changePassword" ],
+        components: 
+        {
+            MyPopup,
+        },
         data: () => 
         ({
             valid: true,
@@ -26,6 +30,8 @@
             inputType1: 'password',
             inputType2: 'password',
             inputType3: 'password',
+            showPopup: false,
+            popupMessage: '',
         }),
         computed: 
         {
@@ -59,6 +65,19 @@
                     return 'mdi-eye-off';
                 }
             },
+            openPopup(msg)
+            {
+                this.showPopup = true;
+                this.popupMessage = msg;
+            },
+            closePopup()
+            {
+                this.showPopup = false;
+            },
+            changePassword()
+            {
+                this.openPopup('Password changed successfully');
+            }
         },
     }
 </script>
@@ -109,12 +128,14 @@
     
             <v-btn
                 :disabled="!valid"
-                @click="$emit('changePassword')"
+                @click="changePassword()"
                 class="formBtn"
             >
                 Save changes
             </v-btn>
         </v-form>
+
+		<MyPopup :togglePopup="this.showPopup" :message="this.popupMessage" @close-popup='closePopup()'/>
     </div>
 </template>
 

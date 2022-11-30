@@ -2,13 +2,17 @@
     export default 
     {
         name: 'ShowTemplate',
+        emits: ['addTvShow'],
         props: 
         {
             title: String,
             seasons: String,
             firstEpisode: String,
             source: String,
-        }
+            showAddBtn: Boolean,
+            showId: Number,
+            added: Boolean,
+        },
     }
 </script>
 
@@ -19,7 +23,8 @@
             <div class="showText">
                 Title: "{{ title }}" <br>
                 Seasons: {{ seasons }} <br>
-                First episode: {{ firstEpisode }}
+                First episode: {{ firstEpisode }} <br>
+                <v-icon v-if=showAddBtn @click="$emit('addTvShow', showId)" class="addBtn">{{ added ? "mdi-check-circle-outline" : "mdi-plus-circle-outline" }}</v-icon>
             </div>
         </div>
     </div>
@@ -35,7 +40,6 @@
         color: white;
         position: relative;
     }
-
     .showText, .showBg
     {
         display: none;
@@ -45,25 +49,25 @@
         left: 50%;
         transform: translate(-50%, -50%);
     }
-
     .showBg 
     {
         height: 98%;
     }
-
     .imageWithMask:hover .showBg 
     {
         background-color: rgba(180, 180, 180, 0.8);
     }
-
     .imageWithMask:hover .showBg, .showText 
     {
         display: block;
     }
-
     .showPoster 
     {
         width: 100%;
         height: 100%;
+    }
+    .showText .addBtn
+    {
+        color: white; 
     }
 </style>

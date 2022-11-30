@@ -3,7 +3,7 @@
   {
     props: ['display'],
     name: 'AppHeader',
-    emits: [ 'logOut' ],
+    emits: ['logOut'],
     data: () => 
     ({
         menuItems: 

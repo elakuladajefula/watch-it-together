@@ -17,7 +17,13 @@
             searchShows()
             {
                 // this.showsList = [];
-                this.showsList = [{"title": "Game of thrones", "added": false, "showId": 1}, {"title": "Game of thrones", "added": false, "showId": 2}, {"title": "Game of thrones", "added": false, "showId": 3}, {"title": "Game of thrones", "added": false, "showId": 4}];
+                this.showsList = 
+                [
+                    {"title": "Game of thrones", "added": false, "showId": 1}, 
+                    {"title": "Game of thrones", "added": false, "showId": 2}, 
+                    {"title": "Game of thrones", "added": false, "showId": 3}, 
+                    {"title": "Game of thrones", "added": false, "showId": 4}
+                ];
             },
             addShow(id)
             {

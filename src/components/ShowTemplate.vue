@@ -2,7 +2,7 @@
     export default 
     {
         name: 'ShowTemplate',
-        emits: ['addTvShow'],
+        emits: ['addTvShow', 'watchTvShow'],
         props: 
         {
             title: String,
@@ -10,8 +10,10 @@
             firstEpisode: String,
             source: String,
             showAddBtn: Boolean,
+            showWatchBtn: Boolean,
             showId: Number,
             added: Boolean,
+            watched: Boolean,
         },
     }
 </script>
@@ -25,6 +27,7 @@
                 Seasons: {{ seasons }} <br>
                 First episode: {{ firstEpisode }} <br>
                 <v-icon v-if=showAddBtn @click="$emit('addTvShow', showId)" class="addBtn">{{ added ? "mdi-check-circle-outline" : "mdi-plus-circle-outline" }}</v-icon>
+                <v-icon v-if=showWatchBtn @click="$emit('watchTvShow', showId)" class="addBtn">{{ watched ? "mdi-check-circle-outline" : "mdi-television-classic" }}</v-icon>
             </div>
         </div>
     </div>

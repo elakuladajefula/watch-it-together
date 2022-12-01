@@ -13,6 +13,13 @@
     ({
       showPopup: false,
       popupMessage: '',
+      showsList: 
+      [
+        {"title": "Game of thrones", "watched": false, "showId": 1}, 
+        {"title": "Game of thrones", "watched": false, "showId": 2}, 
+        {"title": "Game of thrones", "watched": false, "showId": 3}, 
+        {"title": "Game of thrones", "watched": false, "showId": 4}
+      ],
     }),
     mounted()
     {
@@ -32,7 +39,25 @@
       removeFriend()
       {
         this.showPopup = false;
-      }
+      },
+      watchShow(id)
+      {
+        this.showsList.forEach((item) => 
+        {
+          if (item.showId == id)
+          {
+            if (item.watched)
+            {
+              item.watched = false;
+            }
+            else
+            {
+              //zmienić w bazie danych ststus serialu na obejrzany
+              item.watched = true;
+            }
+          }
+        });
+      },
     },
   }
 </script>
@@ -41,46 +66,18 @@
   <div class="subpage">
     <div class="pageTitle">My shows</div>
     <div class="showsContainer">
-      <ShowTemplate 
-        title="Game of thrones"
-        seasons="8"
-        firstEpisode="17.04.2011"
-        source="../assets/game-of-thrones.jpg"/>
-      <ShowTemplate 
-        title="Game of thrones"
-        seasons="8"
-        firstEpisode="17.04.2011"
-        source="../assets/game-of-thrones.jpg"/>
-      <ShowTemplate 
-        title="Game of thrones"
-        seasons="8"
-        firstEpisode="17.04.2011"
-        source="../assets/game-of-thrones.jpg"/>
-      <ShowTemplate 
-        title="Game of thrones"
-        seasons="8"
-        firstEpisode="17.04.2011"
-        source="../assets/game-of-thrones.jpg"/>
-      <ShowTemplate 
-        title="Game of thrones"
-        seasons="8"
-        firstEpisode="17.04.2011"
-        source="../assets/game-of-thrones.jpg"/>
-      <ShowTemplate 
-        title="Game of thrones"
-        seasons="8"
-        firstEpisode="17.04.2011"
-        source="../assets/game-of-thrones.jpg"/>
-      <ShowTemplate 
-        title="Game of thrones"
-        seasons="8"
-        firstEpisode="17.04.2011"
-        source="../assets/game-of-thrones.jpg"/>
-      <ShowTemplate 
-        title="Game of thrones"
-        seasons="8"
-        firstEpisode="17.04.2011"
-        source="require('.//assets/game-of-thrones.jpg')"/>
+      <v-list-item v-for="(item, i) in showsList" :key="i">
+        <ShowTemplate 
+          :title=item.title
+          seasons="8"
+          firstEpisode="17.04.2011"
+          source="../assets/game-of-thrones.jpg"
+          showWatchBtn=true
+          :showId=item.showId
+          :watched=item.watched
+          @watch-tv-show='(id) => watchShow(id)'
+        />
+      </v-list-item>
     </div>
   </div>
   <FriendInvitationPopup :togglePopup="this.showPopup" :message="this.popupMessage" @add-friend='addFriend()' @remove-friend='removeFriend()'/>

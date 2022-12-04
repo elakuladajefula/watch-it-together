@@ -52,7 +52,7 @@
             }
             else
             {
-              //zmienić w bazie danych ststus serialu na obejrzany
+              //zmienić w bazie danych status serialu na obejrzany
               item.watched = true;
             }
           }

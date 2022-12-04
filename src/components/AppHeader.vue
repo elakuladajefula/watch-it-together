@@ -21,7 +21,7 @@
 
 <template>
   <header class="appHeader">
-    <h1 class="title" :class="{addPadding: display}">Watch it together</h1>
+    <h1 class="title" :class="{'addPadding': display}">Watch it together</h1>
 
     <v-menu bottom left v-if="display">
       <template v-slot:activator="{ on, props }">

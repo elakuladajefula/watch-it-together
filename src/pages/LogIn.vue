@@ -93,4 +93,8 @@
         width: auto;
         margin: 10px;
     }
+    .form .v-input__details
+    {
+        display: flex;
+    }
 </style>

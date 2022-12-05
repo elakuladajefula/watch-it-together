@@ -1,17 +1,22 @@
 <script>
+    import MyPopup from '../components/MyPopup';
     export default
     {
         name: 'RegisterUser',
         emits: [ "logIn" ],
+        components: 
+        {
+            MyPopup,
+        },
         data: () => 
         ({
             valid: true,
             login: '',
             loginRules: 
             [
-                v => !!v || 'Login is required',
-                v => (v && v.length < 30) || 'Login must be less than 30 characters',
-                v => (v && v.length > 2) || 'Login must be more than 2 characters',
+                v => !!v || 'Username is required',
+                v => (v && v.length < 30) || 'Username must be less than 30 characters',
+                v => (v && v.length > 2) || 'Username must be more than 2 characters',
             ],
             password: '',
             passwordRules: 
@@ -21,9 +26,18 @@
                 v => (v && v.length > 2) || 'Password must be more than 2 characters',
             ],
             inputType: 'password',
+            showPopup: false,
+            popupMessage: '',
         }),
         methods: 
         {
+            registerUser()
+            {
+                this.openPopup('Username already taken');
+                // this.$emit('logIn');
+                // przenieść do searchShows
+                // :href="'#/search-shows'"
+            },
             ToggleInput()
             {
                 this.inputType = this.inputType === 'password' ? 'text' : 'password';
@@ -39,6 +53,15 @@
                     return 'mdi-eye-off';
                 }
             },
+            openPopup(msg)
+            {
+                this.showPopup = true;
+                this.popupMessage = msg;
+            },
+            closePopup()
+            {
+                this.showPopup = false;
+            },
         },
     }
 </script>
@@ -52,7 +75,7 @@
                 v-model="login"
                 :counter="30"
                 :rules="loginRules"
-                label="Login"
+                label="Username"
                 required
                 clearable
             ></v-text-field>
@@ -71,13 +94,14 @@
     
             <v-btn
                 :disabled="!valid"
-                @click="$emit('logIn')"
+                @click="registerUser()"
                 class="formBtn"
-                :href="'#/search-shows'"
             >
                 Register
             </v-btn>
         </v-form>
+
+        <MyPopup class="registerPopup" :togglePopup="this.showPopup" :message="this.popupMessage" @close-popup='closePopup()'/>
 
         <p>
             Already registered?
@@ -99,5 +123,9 @@
     .form > *
     {
         margin: 10px;
+    }
+    .registerPopup .popupBtn
+    {
+        background-color: red;
     }
 </style>

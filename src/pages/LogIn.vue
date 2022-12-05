@@ -9,7 +9,7 @@
             login: '',
             loginRules: 
             [
-                v => !!v || 'Login is required',
+                v => !!v || 'Username is required',
             ],
             password: '',
             passwordRules: 
@@ -48,7 +48,7 @@
                 v-model="login"
                 :counter="30"
                 :rules="loginRules"
-                label="Login"
+                label="Username"
                 required
                 clearable
             ></v-text-field>

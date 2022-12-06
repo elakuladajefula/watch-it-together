@@ -32,7 +32,7 @@
             searchFriends()
             {
                 // this.friendsList = [];
-                this.friendsList = [{"name": this.search, "added": false}, {"name": "user1", "added": false}, {"name": "user2", "added": true}, {"name": "user3", "added": false}, {"name": "user4", "added": false}, {"name": "user5", "added": true}, {"name": "user6", "added": false}, ];
+                this.friendsList = [{"name": this.search, "added": false}, {"name": "user1", "added": false}, {"name": "user2", "added": true}, {"name": "user3", "added": false}, {"name": "user4", "added": false}, {"name": "user5", "added": true}, {"name": "user6", "added": false}, {"name": "user7", "added": false}, {"name": "user8", "added": false}, {"name": "user9", "added": false},];
             },
             addFriend(friend)
             {

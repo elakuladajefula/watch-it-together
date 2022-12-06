@@ -37,7 +37,11 @@
         {
             passwordConfirmationRule() 
             {
-                return () => (this.newPassword === this.repeatNewPassword) || 'Password must match'
+                return () => (this.newPassword === this.repeatNewPassword) || 'Password must match';
+            },
+            changePasswordRule() 
+            {
+                return () => (this.oldPassword !== this.newPassword) || 'New password has to be different from the old one';
             },
         },
         methods: 
@@ -105,7 +109,7 @@
             <v-text-field
                 v-model="newPassword"
                 :counter="30"
-                :rules="newPasswordRules"
+                :rules="newPasswordRules.concat(changePasswordRule)"
                 label="New password"
                 required
                 :type="inputType2"

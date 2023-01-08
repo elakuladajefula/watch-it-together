@@ -17,7 +17,7 @@
                         Accept
                     </v-btn>
                     <v-btn @click="$emit('removeFriend')" class="popupBtn removeBtn">
-                        Decline
+                        Reject
                     </v-btn>
                 </div>
             </div>

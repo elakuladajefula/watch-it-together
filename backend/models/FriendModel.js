@@ -45,6 +45,13 @@ export const getFriendsList = (id, result) =>
     })
 }
 
+/**
+ * Return status of connection between 2 users
+ * 
+ * @param {*} id 
+ * @param {*} login 
+ * @param {*} result 
+ */
 export const getFriendStatus = (id, login, result) => 
 {
     db.query("SELECT Status FROM friends JOIN users ON friends.UserID = users.ID WHERE friends.FriendID = ? AND users.Login = ? UNION SELECT Status FROM friends JOIN users ON friends.FriendID = users.ID WHERE friends.UserID = ? AND users.Login = ?", [id, login, id, login], (err, results) =>
@@ -56,7 +63,7 @@ export const getFriendStatus = (id, login, result) =>
         }
         else
         {
-            result(null, results);
+            result(null, results[0]);
         }
     })
 }

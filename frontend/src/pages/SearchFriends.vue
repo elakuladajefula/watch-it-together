@@ -1,5 +1,7 @@
 <script>
     import MyPopup from '../components/MyPopup';
+    import axios from "axios";
+
     export default
     {
         name: 'SearchFriends',
@@ -11,8 +13,9 @@
         ({
             showPopup: false,
             popupMessage: '',
-            search: '',
+            searchString: '',
             friendsList: [],
+            id: 3,
         }),
         methods: 
         {
@@ -29,16 +32,37 @@
             {
                 this.openPopup('Invitation sent successfully');
             },
-            searchFriends()
+            async searchFriends(userName)
             {
-                // this.friendsList = [];
-                this.friendsList = [{"name": this.search, "added": false}, {"name": "user1", "added": false}, {"name": "user2", "added": true}, {"name": "user3", "added": false}, {"name": "user4", "added": false}, {"name": "user5", "added": true}, {"name": "user6", "added": false}, {"name": "user7", "added": false}, {"name": "user8", "added": false}, {"name": "user9", "added": false},];
+                try 
+                {
+                    this.friendsList = [];
+                    const response = await axios.get(`http://localhost:5000/user/${userName}/${this.id}`);
+                    var logins = response.data;
+                    try 
+                    {
+                        logins.forEach( async element => {
+                            const response2 = await axios.get(`http://localhost:5000/friendstatus/${this.id}/${element.Login}`);
+                            this.friendsList.push({"name": element.Login, "added": response2.data.Status});
+                        });
+
+                    } 
+                    catch (err) 
+                    {
+                        console.log(err);
+                    }
+                } 
+                catch (err) 
+                {
+                    console.log(err);
+                }
             },
             addFriend(friend)
             {
                 if (!friend.added)
                 {
                     friend.added = true;
+                    this.sendInvitation();
                 }
             },
         },
@@ -50,12 +74,12 @@
         <div class="pageTitle">Search friends</div>
         <div class="searchArea">
             <v-text-field
-                v-model="search"
+                v-model="searchString"
                 label="Search"
                 clearable
                 class="searchBar"
             ></v-text-field>
-            <v-btn @click="searchFriends()" class="formBtn searchBtn">
+            <v-btn @click="searchFriends(this.searchString)" class="formBtn searchBtn">
                 <v-icon>mdi-magnify</v-icon>
             </v-btn>
         </div>

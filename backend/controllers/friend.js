@@ -1,4 +1,4 @@
-import { getFriendsList, sendInvitation } from "../models/FriendModel.js";
+import { getFriendsList, getFriendStatus, sendInvitation } from "../models/FriendModel.js";
 
 export const addFriend = (req, res) => 
 {
@@ -18,6 +18,21 @@ export const addFriend = (req, res) =>
 export const showFriends = (req, res) => 
 {
     getFriendsList(req.params.userID, (err, results) =>
+    {
+        if (err)
+        {
+            res.send(err);
+        }
+        else
+        {
+            res.json(results);
+        }
+    })
+}
+
+export const showStatus = (req, res) => 
+{
+    getFriendStatus(req.params.userID, req.params.friendLogin, (err, results) =>
     {
         if (err)
         {

@@ -62,7 +62,7 @@ export const changePassword = (req, res) =>
 
 export const searchFriends = (req, res) => 
 {
-    getUserByName(req.params.newPass, req.params.login, req.params.oldPass, (err, results) =>
+    getUserByName(req.params.name, req.params.id, (err, results) =>
     {
         if (err)
         {

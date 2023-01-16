@@ -100,9 +100,10 @@ export const changeUserSettings = (newPass, login, oldPass, result) =>
  * @param {*} name 
  * @param {*} result 
  */
-export const getUserByName = (name, result) => 
+export const getUserByName = (name, id, result) => 
 {
-    db.query("SELECT Login FROM users WHERE Login LIKE '%' + ? + '%'", [name], (err, results) =>
+    var keyword = "%" + name + "%"
+    db.query("SELECT Login FROM users WHERE Login LIKE ? AND ID NOT LIKE ?", [keyword, id], (err, results) =>
     {
         if (err)
         {
@@ -111,7 +112,7 @@ export const getUserByName = (name, result) =>
         }
         else
         {
-            result(null, results[0]);
+            result(null, results);
         }
     })
 }

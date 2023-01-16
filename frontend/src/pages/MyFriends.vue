@@ -50,7 +50,6 @@
                 {
                     const response = await axios.get(`http://localhost:5000/friends/${id}`);
                     this.friendsList = response.data;
-                    console.log(this.friendsList);
                 } 
                 catch (err) 
                 {
@@ -63,7 +62,6 @@
                 {
                     const response = await axios.get(`http://localhost:5000/tvshows/${name}`);
                     this.friendShowsList = response.data;
-                    console.log(this.friendShowsList);
                 } 
                 catch (err) 
                 {

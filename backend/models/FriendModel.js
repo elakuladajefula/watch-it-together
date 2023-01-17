@@ -67,3 +67,49 @@ export const getFriendStatus = (id, login, result) =>
         }
     })
 }
+
+/**
+ * Change status of friendship to ACCEPTED
+ * 
+ * @param {*} id ID of the user logged in
+ * @param {*} login login of the user who sent invitation
+ * @param {*} result 
+ */
+export const acceptInvite = (id, login, result) => 
+{
+    db.query("UPDATE friends SET Status = 'ACCEPTED' WHERE UserID = (SELECT ID FROM users WHERE Login = ?) AND FriendID = ?", [login, id], (err, results) =>
+    {
+        if (err)
+        {
+            console.log(err);
+            result(err, null);
+        }
+        else
+        {
+            result(null, results);
+        }
+    })
+}
+
+/**
+ * Change status of friendship to REJECTED
+ * 
+ * @param {*} id ID of the user logged in
+ * @param {*} login login of the user who sent invitation
+ * @param {*} result 
+ */
+export const rejectInvite = (id, login, result) => 
+{
+    db.query("UPDATE friends SET Status = 'REJECTED' WHERE UserID = (SELECT ID FROM users WHERE Login = ?) AND FriendID = ?", [login, id], (err, results) =>
+    {
+        if (err)
+        {
+            console.log(err);
+            result(err, null);
+        }
+        else
+        {
+            result(null, results);
+        }
+    })
+}

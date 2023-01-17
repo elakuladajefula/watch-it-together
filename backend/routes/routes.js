@@ -1,7 +1,7 @@
 import express from "express";
 import { logInUser, showInvitations, registerUser, changePassword, searchFriends } from "../controllers/user.js";
 import { addShow, removeShow, updateShow, listShows, listFriendShows } from "../controllers/show.js";
-import { addFriend, showFriends, showStatus } from "../controllers/friend.js";
+import { acceptFriend, addFriend, rejectFriend, showFriends, showStatus } from "../controllers/friend.js";
 
 const router = express.Router();
 
@@ -20,7 +20,9 @@ router.get("/tvshows/:login", listFriendShows);
 
 router.post("/friends", addFriend);
 router.get("/friends/:userID", showFriends);
+router.put("/friends/:userID/:friendLogin", acceptFriend);
 
+router.put("/friendstatus/:userID/:friendLogin", rejectFriend);
 router.get("/friendstatus/:userID/:friendLogin", showStatus);
 
 export default router;

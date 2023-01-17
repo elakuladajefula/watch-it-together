@@ -17,6 +17,7 @@
       popupMessage: '',
       showsList: [],
       id: '3',
+      friendLogin: '',
     }),
     created()
     {
@@ -24,7 +25,7 @@
     },
     mounted()
     {
-      this.getInvitations(this.id);
+      this.getInvitations();
     },
     methods: 
     {
@@ -33,12 +34,28 @@
         this.showPopup = true;
         this.popupMessage = msg;
       },
-      addFriend()
+      async acceptFriend()
       {
+        try 
+        {
+          await axios.put(`http://localhost:5000/friends/${this.id}/${this.friendLogin}`);
+        } 
+        catch (err) 
+        {
+          console.log(err);
+        }
         this.showPopup = false;
       },
-      removeFriend()
+      async rejectFriend()
       {
+        try 
+        {
+          await axios.put(`http://localhost:5000/friendstatus/${this.id}/${this.friendLogin}`);
+        } 
+        catch (err) 
+        {
+          console.log(err);
+        }
         this.showPopup = false;
       },
       watchShow(id)
@@ -71,15 +88,16 @@
           console.log(err);
         }
       },
-      async getInvitations(userID) 
+      async getInvitations() 
       {
         try 
         {
-          const response = await axios.get(`http://localhost:5000/users/${userID}`);
+          const response = await axios.get(`http://localhost:5000/users/${this.id}`);
           var invitations = response.data;
           invitations.forEach(element => 
           {
-            this.openPopup('New friend invitation from ' + element.Login);
+            this.friendLogin = element.Login;
+            this.openPopup('New friend invitation from ' + this.friendLogin);
           });
         } 
         catch (err) 
@@ -108,7 +126,7 @@
         />
       </v-list-item>
     </div>
-    <FriendInvitationPopup :togglePopup="this.showPopup" :message="this.popupMessage" @add-friend='addFriend()' @remove-friend='removeFriend()'/>
+    <FriendInvitationPopup :togglePopup="this.showPopup" :message="this.popupMessage" @add-friend='acceptFriend()' @remove-friend='rejectFriend()'/>
   </div>
 </template>
 

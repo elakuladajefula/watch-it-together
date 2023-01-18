@@ -13,7 +13,7 @@
         ({
             search: '',
             showsList: [],
-            userID: '',
+            userID: '3',
         }),
         methods: 
         {
@@ -22,11 +22,30 @@
                 // this.showsList = [];
                 this.showsList = 
                 [
-                    {"title": "Game of thrones", "added": false, "showId": 1}, 
+                    {"title": "Game of thrones", "added": true, "showId": 1}, 
                     {"title": "Game of thrones", "added": false, "showId": 2}, 
                     {"title": "Game of thrones", "added": false, "showId": 3}, 
                     {"title": "Game of thrones", "added": false, "showId": 4}
                 ];
+                this.showsList.forEach(async (item) => 
+                {
+                    try 
+                    {
+                        const response = await axios.get(`http://localhost:5000/tvshows/${this.userID}/${item.showId}`);
+                        if (response.data)
+                        {
+                            item.added = true;
+                        }
+                        else
+                        {
+                            item.added = false;
+                        }
+                    } 
+                    catch (err)
+                    {
+                        console.log(err);
+                    }
+                });
             },
             addShow(id)
             {

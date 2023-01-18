@@ -1,4 +1,4 @@
-import { deleteShow, insertShow, watchShow, getShows, getFriendShows } from "../models/ShowModel.js";
+import { deleteShow, insertShow, watchShow, getShows, getFriendShows, getShowStatus } from "../models/ShowModel.js";
 
 export const addShow = (req, res) => 
 {
@@ -78,6 +78,21 @@ export const listShows = (req, res) =>
 export const listFriendShows = (req, res) => 
 {
     getFriendShows(req.params.login, (err, results) =>
+    {
+        if (err)
+        {
+            res.send(err);
+        }
+        else
+        {
+            res.json(results);
+        }
+    })
+}
+
+export const getStatus = (req, res) => 
+{
+    getShowStatus(req.params.userID, req.params.showID, (err, results) =>
     {
         if (err)
         {

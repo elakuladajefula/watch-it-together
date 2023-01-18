@@ -6,7 +6,7 @@ import db from '../config/database.js';
  * @param {*} userID
  * @param {*} showID 
  */
-export const insertShow = (userID, showID) => 
+export const insertShow = (userID, showID, result) => 
 {
     db.query("INSERT INTO tvshows (UserID, ShowID, ShowStatus) VALUES (?, ?, 'ADDED')", [userID, showID], (err, results) =>
     {
@@ -28,7 +28,7 @@ export const insertShow = (userID, showID) =>
  * @param {*} userID 
  * @param {*} showID 
  */
-export const deleteShow = (userID, showID) => 
+export const deleteShow = (userID, showID, result) => 
 {
     db.query("DELETE FROM tvshows WHERE UserID = ? AND ShowID = ?", [userID, showID], (err, results) =>
     {
@@ -50,7 +50,7 @@ export const deleteShow = (userID, showID) =>
  * @param {*} userID 
  * @param {*} showID 
  */
-export const watchShow = (userID, showID) => 
+export const watchShow = (userID, showID, result) => 
 {
     db.query("UPDATE tvshows SET ShowStatus = 'WATCHED' WHERE UserID = ? AND ShowID = ?", [userID, showID], (err, results) =>
     {
@@ -72,7 +72,7 @@ export const watchShow = (userID, showID) =>
  * @param {*} userID 
  * @param {*} showID 
  */
-export const unwatchShow = (userID, showID) => 
+export const unwatchShow = (userID, showID, result) => 
 {
     db.query("UPDATE tvshows SET ShowStatus = 'ADDED' WHERE UserID = ? AND ShowID = ?", [userID, showID], (err, results) =>
     {
@@ -128,6 +128,29 @@ export const getFriendShows = (login, result) =>
         else
         {
             result(null, results);
+        }
+    })
+}
+
+/**
+ * Check if show was added to list
+ * 
+ * @param {*} userID 
+ * @param {*} showID 
+ * @param {*} result 
+ */
+export const getShowStatus = (userID, showID, result) => 
+{
+    db.query("SELECT ShowStatus FROM tvshows WHERE UserID = ? AND ShowID = ?", [userID, showID], (err, results) =>
+    {
+        if (err)
+        {
+            console.log(err);
+            result(err, null);
+        }
+        else
+        {
+            result(null, results[0]);
         }
     })
 }

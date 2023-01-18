@@ -95,7 +95,7 @@
       {
         try 
         {
-          const response = await axios.get(`http://localhost:5000/tvshows/${userID}`);
+          const response = await axios.get(`http://localhost:5000/mytvshows/${userID}`);
           this.showsList = response.data;
         } 
         catch (err) 

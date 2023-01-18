@@ -60,7 +60,7 @@
             {
                 try 
                 {
-                    const response = await axios.get(`http://localhost:5000/tvshows/${name}`);
+                    const response = await axios.get(`http://localhost:5000/friendtvshows/${name}`);
                     this.friendShowsList = response.data;
                 } 
                 catch (err) 

@@ -18,7 +18,7 @@ router.put("/tvshows", updateShow);
 router.get("/tvshows/:id", listShows);
 router.get("/tvshows/:login", listFriendShows);
 
-router.post("/friends", addFriend);
+router.post("/friends/:userID/:friendLogin", addFriend);
 router.get("/friends/:userID", showFriends);
 router.put("/friends/:userID/:friendLogin", acceptFriend);
 

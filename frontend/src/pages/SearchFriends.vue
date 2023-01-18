@@ -28,9 +28,17 @@
             {
                 this.showPopup = false;
             },
-            sendInvitation()
+            async sendInvitation(friendName)
             {
-                this.openPopup('Invitation sent successfully');
+                try 
+                {
+                    await axios.post(`http://localhost:5000/friends/${this.id}/${friendName}`);
+                    this.openPopup('Invitation sent successfully');
+                } 
+                catch (err)
+                {
+                    console.log(err);
+                }
             },
             async searchFriends(userName)
             {
@@ -62,7 +70,7 @@
                 if (!friend.added)
                 {
                     friend.added = true;
-                    this.sendInvitation();
+                    this.sendInvitation(friend.name);
                 }
             },
         },

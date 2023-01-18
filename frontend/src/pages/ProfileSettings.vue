@@ -86,8 +86,14 @@
                 try 
                 {
                     const response = await axios.put(`http://localhost:5000/users/${this.newPassword}/${this.id}/${this.oldPassword}`);
-                    console.log(this.newPassword, this.id, this.oldPassword, response);
-                    this.openPopup('Password changed successfully');
+                    if(response.data.affectedRows > 0)
+                    {
+                        this.openPopup('Password changed successfully');
+                    }
+                    else
+                    {
+                        this.openPopup('Incorrect old password');
+                    }
                 } 
                 catch (err) 
                 {

@@ -47,7 +47,7 @@ export const registerUser = (req, res) =>
 
 export const changePassword = (req, res) => 
 {
-    changeUserSettings(req.params.newPass, req.params.login, req.params.oldPass, (err, results) =>
+    changeUserSettings(req.params.newPass, req.params.id, req.params.oldPass, (err, results) =>
     {
         if (err)
         {

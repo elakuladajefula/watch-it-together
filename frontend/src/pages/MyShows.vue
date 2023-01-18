@@ -60,18 +60,33 @@
       },
       watchShow(id)
       {
-        this.showsList.forEach((item) => 
+        this.showsList.forEach(async (item) => 
         {
           if (item.showId == id)
           {
             if (item.watched)
             {
-              item.watched = false;
+              try 
+              {
+                await axios.put(`http://localhost:5000/mytvshows/${this.userID}/${id}`);
+                item.watched = false;
+              } 
+              catch (err)
+              {
+                console.log(err);
+              }
             }
             else
             {
-              //zmienić w bazie danych status serialu na obejrzany
-              item.watched = true;
+              try 
+              {
+                await axios.put(`http://localhost:5000/tvshows/${this.userID}/${id}`);
+                item.watched = true;
+              } 
+              catch (err)
+              {
+                console.log(err);
+              }
             }
           }
         });

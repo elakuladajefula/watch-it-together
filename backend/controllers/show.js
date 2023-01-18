@@ -45,6 +45,21 @@ export const updateShow = (req, res) =>
     })
 }
 
+export const unupdateShow = (req, res) => 
+{
+    unwatchShow(req.params.userID, req.params.showID, (err, results) =>
+    {
+        if (err)
+        {
+            res.send(err);
+        }
+        else
+        {
+            res.json(results);
+        }
+    })
+}
+
 export const listShows = (req, res) => 
 {
     getShows(req.params.id, (err, results) =>

@@ -1,5 +1,7 @@
 <script>
     import ShowTemplate from '../components/ShowTemplate.vue';
+    import axios from "axios";
+
     export default
     {
         name: 'SearchShows',
@@ -11,6 +13,7 @@
         ({
             search: '',
             showsList: [],
+            userID: '',
         }),
         methods: 
         {
@@ -27,17 +30,33 @@
             },
             addShow(id)
             {
-                this.showsList.forEach((item) => 
+                this.showsList.forEach(async (item) => 
                 {
                     if (item.showId == id)
                     {
                         if (item.added)
                         {
-                            item.added = false;
+                            try 
+                            {
+                                await axios.delete(`http://localhost:5000/tvshows/${this.userID}/${id}`);
+                                item.added = false;
+                            } 
+                            catch (err)
+                            {
+                                console.log(err);
+                            }
                         }
                         else
                         {
-                            item.added = true;
+                            try 
+                            {
+                                await axios.post(`http://localhost:5000/tvshows/${this.userID}/${id}`);
+                                item.added = true;
+                            } 
+                            catch (err)
+                            {
+                                console.log(err);
+                            }
                         }
                     }
                 });

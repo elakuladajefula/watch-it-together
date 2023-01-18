@@ -67,6 +67,28 @@ export const watchShow = (userID, showID) =>
 }
 
 /**
+ * Change TV show status to watched
+ * 
+ * @param {*} userID 
+ * @param {*} showID 
+ */
+export const unwatchShow = (userID, showID) => 
+{
+    db.query("UPDATE tvshows SET ShowStatus = 'ADDED' WHERE UserID = ? AND ShowID = ?", [userID, showID], (err, results) =>
+    {
+        if (err)
+        {
+            console.log(err);
+            result(err, null);
+        }
+        else
+        {
+            result(null, results);
+        }
+    })
+}
+
+/**
  * Select all shows added to list
  * 
  * @param {*} id 

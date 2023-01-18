@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/users", logInUser);
 router.get("/users/:id", showInvitations);
 router.post("/users", registerUser);
-router.put("/users", changePassword);
+router.put("/users/:newPass/:id/:oldPass", changePassword);
 
 router.get("/user/:name/:id", searchFriends);
 

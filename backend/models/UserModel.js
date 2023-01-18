@@ -78,9 +78,9 @@ export const getRegistered = (login, pass, result) =>
  * @param {*} oldPass old user password
  * @param {*} result 
  */
-export const changeUserSettings = (newPass, login, oldPass, result) => 
+export const changeUserSettings = (newPass, id, oldPass, result) => 
 {
-    db.query("UPDATE users SET Password = ? WHERE Login = ? AND Password = ?", [newPass, login, oldPass], (err, results) =>
+    db.query("UPDATE users SET Password = ? WHERE ID = ? AND Password = ?", [newPass, id, oldPass], (err, results) =>
     {
         if (err)
         {

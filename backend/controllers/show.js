@@ -1,4 +1,4 @@
-import { deleteShow, insertShow, watchShow, getShows, getFriendShows, getShowStatus } from "../models/ShowModel.js";
+import { deleteShow, insertShow, watchShow, getShows, getFriendShows, getShowStatus, unwatchShow } from "../models/ShowModel.js";
 
 export const addShow = (req, res) => 
 {

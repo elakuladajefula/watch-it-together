@@ -58,17 +58,17 @@
         }
         this.showPopup = false;
       },
-      watchShow(id)
+      watchShow(show)
       {
         this.showsList.forEach(async (item) => 
         {
-          if (item.showId == id)
+          if (item.ShowID === show)
           {
             if (item.watched)
             {
               try 
               {
-                await axios.put(`http://localhost:5000/mytvshows/${this.userID}/${id}`);
+                await axios.put(`http://localhost:5000/mytvshows/${this.id}/${show}`);
                 item.watched = false;
               } 
               catch (err)
@@ -80,7 +80,7 @@
             {
               try 
               {
-                await axios.put(`http://localhost:5000/tvshows/${this.userID}/${id}`);
+                await axios.put(`http://localhost:5000/tvshows/${this.id}/${show}`);
                 item.watched = true;
               } 
               catch (err)
@@ -97,6 +97,17 @@
         {
           const response = await axios.get(`http://localhost:5000/mytvshows/${userID}`);
           this.showsList = response.data;
+          this.showsList.forEach( (item) =>
+          {
+            if(item.ShowStatus === 'ADDED')
+            {
+              item.watched = false;
+            }
+            else
+            {
+              item.watched = true;
+            }
+          });
         } 
         catch (err) 
         {
@@ -130,14 +141,14 @@
     <div class="showsContainer">
       <v-list-item v-for="(item, i) in showsList" :key="i">
         <ShowTemplate 
-          :title=item
+          :title=item.ShowID
           seasons="8"
           firstEpisode="17.04.2011"
           source="../assets/game-of-thrones.jpg"
           showWatchBtn=true
-          :showId=item
-          watched=false
-          @watch-tv-show='(id) => watchShow(id)'
+          :showId=item.ShowID
+          :watched=item.watched
+          @watch-tv-show='(item) => watchShow(item)'
         />
       </v-list-item>
     </div>

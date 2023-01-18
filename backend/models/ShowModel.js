@@ -96,7 +96,7 @@ export const unwatchShow = (userID, showID, result) =>
  */
 export const getShows = (id, result) => 
 {
-    db.query("SELECT ShowID FROM tvshows WHERE UserID = ? AND ShowStatus = 'ADDED'", [id], (err, results) =>
+    db.query("SELECT ShowID, ShowStatus FROM tvshows WHERE UserID = ? AND ShowStatus = 'ADDED'", [id], (err, results) =>
     {
         if (err)
         {

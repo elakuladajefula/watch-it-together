@@ -1,5 +1,7 @@
 <script>
     import MyPopup from '../components/MyPopup';
+    import axios from "axios";
+
     export default
     {
         name: 'ProfileSettings',
@@ -32,6 +34,7 @@
             inputType3: 'password',
             showPopup: false,
             popupMessage: '',
+            id: 3,
         }),
         computed: 
         {
@@ -78,9 +81,18 @@
             {
                 this.showPopup = false;
             },
-            changePassword()
+            async changePassword()
             {
-                this.openPopup('Password changed successfully');
+                try 
+                {
+                    const response = await axios.put(`http://localhost:5000/users/${this.newPassword}/${this.id}/${this.oldPassword}`);
+                    console.log(this.newPassword, this.id, this.oldPassword, response);
+                    this.openPopup('Password changed successfully');
+                } 
+                catch (err) 
+                {
+                    console.log(err);
+                }
             }
         },
     }

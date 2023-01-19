@@ -1,7 +1,6 @@
 <script>
     import MyPopup from '../components/MyPopup';
     import axios from "axios";
-    import router from "../router";
 
     export default
     {

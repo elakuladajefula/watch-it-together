@@ -1,6 +1,7 @@
 <script>
     import MyPopup from '../components/MyPopup';
     import axios from "axios";
+    import router from "../router";
 
     export default
     {
@@ -54,7 +55,7 @@
                     {
                         this.id = response.data.UserID;
                         this.$emit('logIn');
-                        // this.$router.push('#my-shows');
+                        this.$router.push('#my-shows');
                     }
                     else
                     {

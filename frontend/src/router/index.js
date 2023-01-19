@@ -1,11 +1,12 @@
+import Vue from 'vue';
 import Router from "vue-router";
-import MyShows from './pages/MyShows.vue'
-import MyFriends from './pages/MyFriends.vue'
-import SearchFriends from './pages/SearchFriends.vue'
-import SearchShows from './pages/SearchShows.vue'
-import ProfileSettings from './pages/ProfileSettings.vue'
-import LogIn from './pages/LogIn.vue'
-import RegisterUser from './pages/RegisterUser.vue'
+import MyShows from '../pages/MyShows.vue';
+import MyFriends from '../pages/MyFriends.vue';
+import SearchFriends from '../pages/SearchFriends.vue';
+import SearchShows from '../pages/SearchShows.vue';
+import ProfileSettings from '../pages/ProfileSettings.vue';
+import LogIn from '../pages/LogIn.vue';
+import RegisterUser from '../pages/RegisterUser.vue';
 
 Vue.use(Router);
 export default new Router(

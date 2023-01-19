@@ -54,7 +54,7 @@
                     {
                         this.id = response.data.UserID;
                         this.$emit('logIn');
-                        this.$router.push('#my-shows');
+                        window.location.href = '#my-shows';
                     }
                     else
                     {

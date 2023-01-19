@@ -41,7 +41,7 @@
                     if (response.data.affectedRows === 1)
                     {
                         this.$emit('logIn');
-                        // this.$router.push('#/search-shows');
+                        window.location.href = '#search-shows';
                     }
                     else
                     {

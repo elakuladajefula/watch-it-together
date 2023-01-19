@@ -1,5 +1,7 @@
 <script>
     import MyPopup from '../components/MyPopup';
+    import axios from "axios";
+
     export default
     {
         name: 'RegisterUser',
@@ -31,12 +33,25 @@
         }),
         methods: 
         {
-            registerUser()
+            async registerUser()
             {
-                this.openPopup('Username already taken');
-                // this.$emit('logIn');
-                // przenieść do searchShows
-                // :href="'#/search-shows'"
+                try 
+                {
+                    const response = await axios.post(`http://localhost:5000/users/${this.login}/${this.password}`);
+                    if (response.data.affectedRows === 1)
+                    {
+                        this.$emit('logIn');
+                        // this.$router.push('#/search-shows');
+                    }
+                    else
+                    {
+                        this.openPopup("Username already taken");
+                    }
+                } 
+                catch (err)
+                {
+                    console.log(err);
+                }
             },
             ToggleInput()
             {

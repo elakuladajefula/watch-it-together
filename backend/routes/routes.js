@@ -5,9 +5,9 @@ import { acceptFriend, addFriend, rejectFriend, showFriends, showStatus } from "
 
 const router = express.Router();
 
-router.get("/users", logInUser);
+router.get("/users/:login/:pass", logInUser);
 router.get("/users/:id", showInvitations);
-router.post("/users", registerUser);
+router.post("/users/:login/:pass", registerUser);
 router.put("/users/:newPass/:id/:oldPass", changePassword);
 
 router.get("/user/:name/:id", searchFriends);

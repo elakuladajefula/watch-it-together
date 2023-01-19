@@ -1,5 +1,7 @@
 <script>
     import MyPopup from '../components/MyPopup';
+    import axios from "axios";
+
     export default
     {
         name: 'LogIn',
@@ -24,6 +26,7 @@
             inputType: 'password',
             showPopup: false,
             popupMessage: '',
+            id: '',
         }),
         methods: 
         {
@@ -42,9 +45,26 @@
                     return 'mdi-eye-off';
                 }
             },
-            logIn()
+            async loginUser()
             {
-                this.$emit('logIn');
+                try 
+                {
+                    const response = await axios.get(`http://localhost:5000/users/${this.login}/${this.password}`);
+                    if (response.data != '')
+                    {
+                        this.id = response.data.UserID;
+                        this.$emit('logIn');
+                        // this.$router.push('#my-shows');
+                    }
+                    else
+                    {
+                        this.openPopup("Wrong credentials");
+                    }
+                } 
+                catch (err)
+                {
+                    console.log(err);
+                }
             },
             openPopup(msg)
             {
@@ -91,9 +111,8 @@
     
             <v-btn
                 :disabled="!valid"
-                @click="logIn"
+                @click="loginUser"
                 class="formBtn"
-                :href="'#/my-shows'"
             >
                 Log in
             </v-btn>

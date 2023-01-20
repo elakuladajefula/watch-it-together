@@ -45,21 +45,24 @@
                     return 'mdi-eye-off';
                 }
             },
-            async loginUser()
+            loginUser()
             {
                 try 
                 {
-                    const response = await axios.get(`http://localhost:5000/users/${this.login}/${this.password}`);
-                    if (response.data != '')
+                    this.hash(this.password).then(async (hex) => 
                     {
-                        this.id = response.data.UserID;
-                        this.$emit('logIn');
-                        window.location.href = '#my-shows';
-                    }
-                    else
-                    {
-                        this.openPopup("Wrong credentials");
-                    }
+                        const response = await axios.get(`http://localhost:5000/users/${this.login}/${hex}`);
+                        if (response.data != '')
+                        {
+                            this.id = response.data.UserID;
+                            this.$emit('logIn');
+                            window.location.href = '#my-shows';
+                        }
+                        else
+                        {
+                            this.openPopup("Wrong credentials");
+                        }
+                    });
                 } 
                 catch (err)
                 {
@@ -75,9 +78,15 @@
             {
                 this.showPopup = false;
             },
-            hashPass(pass)
+            async hash(string)
             {
-                return pass;
+                const utf8 = new TextEncoder().encode(string);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashHex = hashArray
+                    .map((bytes) => bytes.toString(16).padStart(2, '0'))
+                    .join('');
+                return hashHex;
             },
         },
     }

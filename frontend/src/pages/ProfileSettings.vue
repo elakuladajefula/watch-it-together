@@ -34,7 +34,7 @@
             inputType3: 'password',
             showPopup: false,
             popupMessage: '',
-            id: 3,
+            id: 10,
         }),
         computed: 
         {
@@ -81,25 +81,41 @@
             {
                 this.showPopup = false;
             },
-            async changePassword()
+            changePassword()
             {
                 try 
                 {
-                    const response = await axios.put(`http://localhost:5000/users/${this.newPassword}/${this.id}/${this.oldPassword}`);
-                    if(response.data.affectedRows > 0)
+                    this.hash(this.oldPassword).then(async (hex) => 
                     {
-                        this.openPopup('Password changed successfully');
-                    }
-                    else
-                    {
-                        this.openPopup('Incorrect old password');
-                    }
+                        this.hash(this.newPassword).then(async (hex2) => 
+                        {
+                            const response = await axios.put(`http://localhost:5000/users/${hex2}/${this.id}/${hex}`);
+                            if (response.data.affectedRows > 0)
+                            {
+                                this.openPopup('Password changed successfully');
+                            }
+                            else
+                            {
+                                this.openPopup('Incorrect old password');
+                            }
+                        })
+                    });
                 } 
                 catch (err) 
                 {
                     console.log(err);
                 }
-            }
+            },
+            async hash(string)
+            {
+                const utf8 = new TextEncoder().encode(string);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashHex = hashArray
+                    .map((bytes) => bytes.toString(16).padStart(2, '0'))
+                    .join('');
+                return hashHex;
+            },
         },
     }
 </script>

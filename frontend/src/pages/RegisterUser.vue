@@ -33,20 +33,24 @@
         }),
         methods: 
         {
-            async registerUser()
+            registerUser()
             {
                 try 
                 {
-                    const response = await axios.post(`http://localhost:5000/users/${this.login}/${this.password}`);
-                    if (response.data.affectedRows === 1)
+                    this.hash(this.password).then(async (hex) => 
                     {
-                        this.$emit('logIn');
-                        window.location.href = '#search-shows';
-                    }
-                    else
-                    {
-                        this.openPopup("Username already taken");
-                    }
+                        const response = await axios.post(`http://localhost:5000/users/${this.login}/${hex}`);
+                        if (response.data.affectedRows === 1)
+                        {
+                            this.id = response.data.UserID;
+                            this.$emit('logIn');
+                            window.location.href = '#search-shows';
+                        }
+                        else
+                        {
+                            this.openPopup("Username already taken");
+                        }
+                    });
                 } 
                 catch (err)
                 {
@@ -76,6 +80,16 @@
             closePopup()
             {
                 this.showPopup = false;
+            },
+            async hash(string)
+            {
+                const utf8 = new TextEncoder().encode(string);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashHex = hashArray
+                    .map((bytes) => bytes.toString(16).padStart(2, '0'))
+                    .join('');
+                return hashHex;
             },
         },
     }

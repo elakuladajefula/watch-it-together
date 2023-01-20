@@ -62,11 +62,24 @@
                 {
                     const response = await axios.get(`http://localhost:5000/friendtvshows/${name}`);
                     this.friendShowsList = response.data;
+                    for(let i = 0; i < this.friendShowsList.length; i++)
+                    {
+                        this.friendShowsList[i] = await this.getapi(this.friendShowsList[i].ShowID);
+                    }
                 } 
                 catch (err) 
                 {
                     console.log(err);
                 }
+            },
+            async getapi(id) 
+            {
+                const api_url = "https://www.episodate.com/api/show-details?q=";
+                const fullUrl = api_url + id;
+                const response = await fetch(fullUrl);
+                
+                var data = await response.json();
+                return data.tvShow;
             },
         }
     }
@@ -101,14 +114,15 @@
         <v-btn @click="goBackToMyFriends()" class="formBtn">
             Go back
         </v-btn>
-        <!-- tu trzeba ogarnąć połączenie z API i za pomocą showID pobierać dane -->
-        <v-list-item class="showsContainer"  v-for="(show, i) in showsList" :key="i">
-            <ShowTemplate 
-                :title=show
-                seasons="8"
-                firstEpisode="17.04.2011"
-                source="../assets/game-of-thrones.jpg"/>
-        </v-list-item>
+        <div class="showsContainer">
+            <v-list-item v-for="(item, i) in showsList" :key="i">
+                <ShowTemplate 
+                    :title = item.name
+                    :firstEpisode = item.start_date
+                    :source = item.image_thumbnail_path
+                />
+            </v-list-item>
+        </div>
     </div>
 
     <div v-else-if="selectComponent === 'friendShows'" class="subpage">
@@ -116,13 +130,15 @@
         <v-btn @click="goBackToMyFriends()" class="formBtn">
             Go back
         </v-btn>
-        <v-list-item class="showsContainer"  v-for="(show, i) in friendShowsList" :key="i">
-            <ShowTemplate 
-                :title=show
-                seasons="8"
-                firstEpisode="17.04.2011"
-                source="../assets/game-of-thrones.jpg"/>
-        </v-list-item>
+        <div class="showsContainer">
+            <v-list-item v-for="(item, i) in friendShowsList" :key="i">
+                <ShowTemplate 
+                    :title = item.name
+                    :firstEpisode = item.start_date
+                    :source = item.image_thumbnail_path
+                />
+            </v-list-item>
+        </div>
     </div>
 </template>
 

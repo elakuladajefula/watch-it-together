@@ -6,8 +6,7 @@
         props: 
         {
             title: String,
-            seasons: String,
-            firstEpisode: String,
+            firstEpisode: Date,
             source: String,
             showAddBtn: Boolean,
             showWatchBtn: Boolean,
@@ -20,11 +19,10 @@
 
 <template>
     <div class="imageWithMask">
-        <v-img :src="require('../assets/game-of-thrones.jpg')" class="showPoster" alt="game of thrones poster"/>
+        <v-img :src=source class="showPoster" alt="tv show poster"/>
         <div class="showBg">
             <div class="showText">
                 Title: "{{ title }}" <br>
-                Seasons: {{ seasons }} <br>
                 First episode: {{ firstEpisode }} <br>
                 <v-icon v-if=showAddBtn @click="$emit('addTvShow', showId)" class="addBtn">{{ added ? "mdi-check-circle-outline" : "mdi-plus-circle-outline" }}</v-icon>
                 <v-icon v-if=showWatchBtn @click="$emit('watchTvShow', showId)" class="addBtn">{{ watched ? "mdi-check-circle-outline" : "mdi-television-classic" }}</v-icon>

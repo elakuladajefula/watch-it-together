@@ -97,17 +97,18 @@
         {
           const response = await axios.get(`http://localhost:5000/mytvshows/${userID}`);
           this.showsList = response.data;
-          this.showsList.forEach( (item) =>
+          for(let i = 0; i < this.showsList.length; i++)
           {
-            if(item.ShowStatus === 'ADDED')
+            this.showsList[i] = await this.getapi(this.showsList[i].ShowID);
+            if(this.showsList[i].ShowStatus === 'ADDED')
             {
-              item.watched = false;
+              this.showsList[i].watched = false;
             }
             else
             {
-              item.watched = true;
+              this.showsList[i].watched = true;
             }
-          });
+          }
         } 
         catch (err) 
         {
@@ -131,6 +132,15 @@
           console.log(err);
         }
       },
+      async getapi(id) 
+      {
+        const api_url = "https://www.episodate.com/api/show-details?q=";
+        const fullUrl = api_url + id;
+        const response = await fetch(fullUrl);
+        
+        var data = await response.json();
+        return data.tvShow;
+      },
     },
   }
 </script>
@@ -141,13 +151,12 @@
     <div class="showsContainer">
       <v-list-item v-for="(item, i) in showsList" :key="i">
         <ShowTemplate 
-          :title=item.ShowID
-          seasons="8"
-          firstEpisode="17.04.2011"
-          source="../assets/game-of-thrones.jpg"
-          showWatchBtn=true
-          :showId=item.ShowID
-          :watched=item.watched
+          :title = item.name
+          :firstEpisode = item.start_date
+          :source = item.image_thumbnail_path
+          showWatchBtn = true
+          :showId = item.id
+          :watched = item.watched
           @watch-tv-show='(item) => watchShow(item)'
         />
       </v-list-item>

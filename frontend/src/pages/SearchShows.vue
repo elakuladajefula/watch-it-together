@@ -17,41 +17,44 @@
         }),
         methods: 
         {
-            searchShows()
+            async searchShows()
             {
-                // this.showsList = [];
-                this.showsList = 
-                [
-                    {"title": "Game of thrones", "added": true, "showId": 1}, 
-                    {"title": "Game of thrones", "added": false, "showId": 2}, 
-                    {"title": "Game of thrones", "added": false, "showId": 3}, 
-                    {"title": "Game of thrones", "added": false, "showId": 4}
-                ];
-                this.showsList.forEach(async (item) => 
+                const api_url = "https://www.episodate.com/api/search?q=";
+                this.showsList = await this.getapi(api_url);
+                for (let i = 0; i < this.showsList.length; i++)
                 {
                     try 
                     {
-                        const response = await axios.get(`http://localhost:5000/tvshows/${this.userID}/${item.showId}`);
+                        const response = await axios.get(`http://localhost:5000/tvshows/${this.userID}/${this.showsList[i].id}`);
                         if (response.data)
                         {
-                            item.added = true;
+                            this.showsList[i].added = true;
                         }
                         else
                         {
-                            item.added = false;
+                            this.showsList[i].added = false;
                         }
                     } 
                     catch (err)
                     {
                         console.log(err);
                     }
-                });
+                }
+            },
+            async getapi(url) 
+            {
+                const searchString = this.search.replace(/\s+/g, '-');
+                const fullUrl = url + searchString;
+                const response = await fetch(fullUrl);
+                
+                var data = await response.json();
+                return data.tv_shows;
             },
             addShow(id)
             {
                 this.showsList.forEach(async (item) => 
                 {
-                    if (item.showId == id)
+                    if (item.id == id)
                     {
                         if (item.added)
                         {
@@ -97,23 +100,18 @@
             <v-icon>mdi-magnify</v-icon>
         </v-btn>
         <div class="showsContainer">
-            <v-list-item v-for="(item, i) in showsList" :key="i">
+            <v-list-item v-for="(item, i) in showsList" :key = "i">
                 <!-- showId będzie pobierane z API, wszystko inne w sumie też -->
                 <ShowTemplate 
-                    :title=item.title
-                    seasons="8"
-                    firstEpisode="17.04.2011"
-                    source="../assets/game-of-thrones.jpg"
-                    showAddBtn=true
-                    :showId=item.showId
-                    :added=item.added
-                    @add-tv-show='(id) => addShow(id)'
+                    :title = item.name
+                    :firstEpisode = item.start_date
+                    :source = item.image_thumbnail_path
+                    showAddBtn = true
+                    :showId = item.id
+                    :added = item.added
+                    @add-tv-show = '(id) => addShow(id)'
                 />
             </v-list-item>
         </div>
     </div>
 </template>
-
-<style>
-
-</style>

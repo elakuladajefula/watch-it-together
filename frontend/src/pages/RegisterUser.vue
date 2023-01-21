@@ -41,9 +41,17 @@
                         const response = await axios.post(`http://localhost:5000/users/${this.login}/${hex}`);
                         if (response.data.affectedRows === 1)
                         {
-                            this.$store.dispatch('setToken', response.data[1]);
-                            this.$store.dispatch('setUser', response.data.UserID);
-                            window.location.href = '#search-shows';
+                            const response = await axios.get(`http://localhost:5000/users/${this.login}/${hex}`);
+                            if (response.data != '')
+                            {
+                                this.$store.dispatch('setToken', response.data[1]);
+                                this.$store.dispatch('setUser', response.data[0].ID);
+                                window.location.href = '#search-shows';
+                            }
+                            else
+                            {
+                                this.openPopup("Something went wrong. Please try again.");
+                            }
                         }
                         else
                         {

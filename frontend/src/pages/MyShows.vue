@@ -62,7 +62,7 @@
       {
         this.showsList.forEach(async (item) => 
         {
-          if (item.ShowID === show)
+          if (item.id === show)
           {
             if (item.watched)
             {
@@ -100,13 +100,16 @@
           this.showsList = response.data;
           for(let i = 0; i < this.showsList.length; i++)
           {
-            this.showsList[i] = await this.getapi(this.showsList[i].ShowID);
             if(this.showsList[i].ShowStatus === 'ADDED')
             {
+              this.showsList[i] = await this.getapi(this.showsList[i].ShowID);
+              this.showsList[i].ShowStatus = 'ADDED'
               this.showsList[i].watched = false;
             }
             else
             {
+              this.showsList[i] = await this.getapi(this.showsList[i].ShowID);
+              this.showsList[i].ShowStatus = 'WATCHED'
               this.showsList[i].watched = true;
             }
           }

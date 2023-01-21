@@ -54,7 +54,7 @@
                         {
                             this.$store.dispatch('setToken', response.data[1]);
                             this.$store.dispatch('setUser', response.data[0].ID);
-                            window.location.href = '#my-shows';
+                            // window.location.href = '#my-shows';
                         }
                         else
                         {

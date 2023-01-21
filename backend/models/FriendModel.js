@@ -69,7 +69,7 @@ export const getFriendStatus = (id, login, result) =>
 }
 
 /**
- * Change status of friendship to ACCEPTED
+ * Change status of friendship to ADDED
  * 
  * @param {*} id ID of the user logged in
  * @param {*} login login of the user who sent invitation
@@ -77,7 +77,7 @@ export const getFriendStatus = (id, login, result) =>
  */
 export const acceptInvite = (id, login, result) => 
 {
-    db.query("UPDATE friends SET Status = 'ACCEPTED' WHERE UserID = (SELECT ID FROM users WHERE Login = ?) AND FriendID = ?", [login, id], (err, results) =>
+    db.query("UPDATE friends SET Status = 'ADDED' WHERE UserID = (SELECT ID FROM users WHERE Login = ?) AND FriendID = ?", [login, id], (err, results) =>
     {
         if (err)
         {

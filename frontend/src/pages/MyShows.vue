@@ -18,6 +18,7 @@
       showsList: [],
       id: '',
       friendLogin: '',
+      invitations: [],
     }),
     created()
     {
@@ -45,6 +46,12 @@
           console.log(err);
         }
         this.showPopup = false;
+        if (this.invitations != '')
+        {
+          this.friendLogin = this.invitations[0].Login;
+          this.openPopup('New friend invitation from ' + this.friendLogin);
+          this.invitations.shift();
+        }
       },
       async rejectFriend()
       {
@@ -57,6 +64,12 @@
           console.log(err);
         }
         this.showPopup = false;
+        if (this.invitations != '')
+        {
+          this.friendLogin = this.invitations[0].Login;
+          this.openPopup('New friend invitation from ' + this.friendLogin);
+          this.invitations.shift();
+        }
       },
       watchShow(show)
       {
@@ -124,12 +137,10 @@
         try 
         {
           const response = await axios.get(`http://localhost:5000/users/${this.id}`);
-          var invitations = response.data;
-          invitations.forEach(element => 
-          {
-            this.friendLogin = element.Login;
-            this.openPopup('New friend invitation from ' + this.friendLogin);
-          });
+          this.invitations = response.data;
+          this.friendLogin = this.invitations[0].Login;
+          this.openPopup('New friend invitation from ' + this.friendLogin);
+          this.invitations.shift();
         } 
         catch (err) 
         {

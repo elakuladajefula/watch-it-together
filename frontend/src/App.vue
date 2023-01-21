@@ -38,13 +38,10 @@
     },
     methods: 
     {
-      showMenu() 
-      {
-        this.displayMenu = true;
-      },
       hideMenu() 
       {
-        this.displayMenu = false;
+        this.$store.dispatch('setToken', null);
+        this.$store.dispatch('setUser', null);
       },
     }
   }
@@ -63,8 +60,8 @@
 
 <template>
   <v-app>
-    <AppHeader :display="displayMenu" @log-out='hideMenu()'/>
-    <component :is="currentView" @log-in='showMenu()'/>
+    <AppHeader :display="$store.state.isUserLoggedIn" @log-out='hideMenu()'/>
+    <component :is="currentView"/>
   </v-app>
 </template>
 

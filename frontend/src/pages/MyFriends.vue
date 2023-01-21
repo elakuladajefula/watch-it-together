@@ -18,11 +18,10 @@
             chosen: [],
             chosenFriend: '',
             selectComponent: 'myFriends',
-            id: '4',
         }),
         created()
         {
-            this.getFriends(this.id);
+            this.getFriends();
         },
         computed: 
         {
@@ -44,10 +43,11 @@
             {
                 this.selectComponent = 'myFriends'
             },
-            async getFriends(id) 
+            async getFriends() 
             {
                 try 
                 {
+                    var id = this.$store.state.user;
                     const response = await axios.get(`http://localhost:5000/friends/${id}`);
                     this.friendsList = response.data;
                 } 

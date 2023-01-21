@@ -5,7 +5,6 @@
     export default
     {
         name: 'RegisterUser',
-        emits: [ "logIn" ],
         components: 
         {
             MyPopup,
@@ -42,8 +41,8 @@
                         const response = await axios.post(`http://localhost:5000/users/${this.login}/${hex}`);
                         if (response.data.affectedRows === 1)
                         {
-                            this.id = response.data.UserID;
-                            this.$emit('logIn');
+                            this.$store.dispatch('setToken', response.data[1]);
+                            this.$store.dispatch('setUser', response.data.UserID);
                             window.location.href = '#search-shows';
                         }
                         else

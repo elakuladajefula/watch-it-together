@@ -13,7 +13,7 @@
         ({
             search: '',
             showsList: [],
-            userID: '3',
+            userID: '',
         }),
         methods: 
         {
@@ -25,6 +25,7 @@
                 {
                     try 
                     {
+                        this.userID = this.$store.state.user;
                         const response = await axios.get(`http://localhost:5000/tvshows/${this.userID}/${this.showsList[i].id}`);
                         if (response.data)
                         {

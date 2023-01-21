@@ -1,4 +1,15 @@
 import db from '../config/database.js';
+import jwt from 'jsonwebtoken';
+const { sign, verify } = jwt;
+
+function jwtSignUser(user) 
+{
+    const ONE_WEEK = 60 * 60 * 24 * 7
+    return sign(user, 'mySuperLongAndSecretStringNoOneKnows', 
+    {
+        expiresIn: ONE_WEEK
+    })
+}
 
 /**
  * Logging in with correct credentials returns userID
@@ -19,7 +30,8 @@ export const getUserID = (login, pass, result) =>
         }
         else
         {
-            result(null, results[0]);
+            results[1] = jwtSignUser(results[0]);
+            result(null, results);
         }
     })
 }

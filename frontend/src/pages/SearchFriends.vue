@@ -15,7 +15,7 @@
             popupMessage: '',
             searchString: '',
             friendsList: [],
-            id: 3,
+            id: '',
         }),
         methods: 
         {
@@ -45,6 +45,7 @@
                 try 
                 {
                     this.friendsList = [];
+                    this.id = this.$store.state.user;
                     const response = await axios.get(`http://localhost:5000/user/${userName}/${this.id}`);
                     var logins = response.data;
                     try 

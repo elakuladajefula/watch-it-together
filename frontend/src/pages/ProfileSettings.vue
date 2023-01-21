@@ -34,7 +34,6 @@
             inputType3: 'password',
             showPopup: false,
             popupMessage: '',
-            id: 10,
         }),
         computed: 
         {
@@ -89,7 +88,8 @@
                     {
                         this.hash(this.newPassword).then(async (hex2) => 
                         {
-                            const response = await axios.put(`http://localhost:5000/users/${hex2}/${this.id}/${hex}`);
+                            const id = this.$store.state.user;
+                            const response = await axios.put(`http://localhost:5000/users/${hex2}/${id}/${hex}`);
                             if (response.data.affectedRows > 0)
                             {
                                 this.openPopup('Password changed successfully');

@@ -5,7 +5,6 @@
     export default
     {
         name: 'LogIn',
-        emits: [ "logIn" ],
         components: 
         {
             MyPopup,
@@ -26,7 +25,6 @@
             inputType: 'password',
             showPopup: false,
             popupMessage: '',
-            id: '',
         }),
         methods: 
         {
@@ -54,8 +52,8 @@
                         const response = await axios.get(`http://localhost:5000/users/${this.login}/${hex}`);
                         if (response.data != '')
                         {
-                            this.id = response.data.UserID;
-                            this.$emit('logIn');
+                            this.$store.dispatch('setToken', response.data[1]);
+                            this.$store.dispatch('setUser', response.data[0].ID);
                             window.location.href = '#my-shows';
                         }
                         else

@@ -16,12 +16,12 @@
       showPopup: false,
       popupMessage: '',
       showsList: [],
-      id: '3',
+      id: '',
       friendLogin: '',
     }),
     created()
     {
-      this.getShows(this.id);
+      this.getShows();
     },
     mounted()
     {
@@ -91,11 +91,12 @@
           }
         });
       },
-      async getShows(userID) 
+      async getShows() 
       {
         try 
         {
-          const response = await axios.get(`http://localhost:5000/mytvshows/${userID}`);
+          this.id = this.$store.state.user;
+          const response = await axios.get(`http://localhost:5000/mytvshows/${this.id}`);
           this.showsList = response.data;
           for(let i = 0; i < this.showsList.length; i++)
           {

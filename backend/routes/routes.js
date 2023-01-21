@@ -1,6 +1,6 @@
 import express from "express";
 import { logInUser, showInvitations, registerUser, changePassword, searchFriends } from "../controllers/user.js";
-import { addShow, removeShow, updateShow, listShows, listFriendShows, unupdateShow, getStatus } from "../controllers/show.js";
+import { addShow, removeShow, updateShow, listShows, listMyShows, listFriendShows, unupdateShow, getStatus } from "../controllers/show.js";
 import { acceptFriend, addFriend, rejectFriend, showFriends, showStatus } from "../controllers/friend.js";
 
 const router = express.Router();
@@ -20,6 +20,8 @@ router.put("/tvshows/:userID/:showID", updateShow);
 
 router.get("/mytvshows/:id", listShows);
 router.put("/mytvshows/:userID/:showID", unupdateShow);
+
+router.get("/mytvshowsid/:id", listMyShows);
 
 router.get("/friendtvshows/:login", listFriendShows);
 

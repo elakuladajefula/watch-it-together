@@ -111,6 +111,28 @@ export const getShows = (id, result) =>
 }
 
 /**
+ * Select all shows but only ShowID
+ * 
+ * @param {*} id 
+ * @param {*} result 
+ */
+export const getMyShows = (id, result) => 
+{
+    db.query("SELECT ShowID FROM tvshows WHERE UserID = ? AND ShowStatus = 'ADDED'", [id], (err, results) =>
+    {
+        if (err)
+        {
+            console.log(err);
+            result(err, null);
+        }
+        else
+        {
+            result(null, results);
+        }
+    })
+}
+
+/**
  * Select all shows added to list by friend
  * 
  * @param {*} login

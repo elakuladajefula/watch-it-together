@@ -18,6 +18,8 @@
             chosen: [],
             chosenFriend: '',
             selectComponent: 'myFriends',
+            id: '',
+            chosenFriendsShows: [],
         }),
         created()
         {
@@ -35,9 +37,49 @@
                 this.selectComponent = 'friendShows';
                 this.chosenFriend = friend;
             },
-            startWatching()
-            {
+            async startWatching()
+            {   
+                await this.getSelectedUsersShows();
+                // check what common elements have those arrays
+                for (var i = 0; i < this.chosenFriendsShows.length; i++)
+                {
+                    this.showsList = this.showsList.filter(x => this.chosenFriendsShows[i].indexOf(x) !== -1)
+                }
+                for(let j = 0; j < this.showsList.length; j++)
+                {
+                    this.showsList[j] = await this.getapi(this.showsList[j]);
+                }
                 this.selectComponent = 'commonShows';
+            },
+            async getSelectedUsersShows()
+            {
+                // get all selected users' shows and put into arrays
+                for (var i = 0; i < this.chosen.length; i++)
+                {
+                    try 
+                    {
+                        const response = await axios.get(`http://localhost:5000/friendtvshows/${this.chosen[i]}`);
+                        
+                        var temp = response.data;
+                        var temp2 = [];
+                        for (var k = 0; k < temp.length; k++)
+                        {
+                            temp2[k] = temp[k].ShowID;
+                        }
+                        this.chosenFriendsShows[i] = temp2;
+                    } 
+                    catch (err) 
+                    {
+                        console.log(err);
+                    }
+                }
+
+                // get user's shows and put into array
+                var list = await this.getMyShows();
+                for (var j = 0; j < list.length; j++)
+                {
+                    this.showsList[j] = list[j].ShowID;
+                }
             },
             goBackToMyFriends()
             {
@@ -47,8 +89,8 @@
             {
                 try 
                 {
-                    var id = this.$store.state.user;
-                    const response = await axios.get(`http://localhost:5000/friends/${id}`);
+                    this.id = this.$store.state.user;
+                    const response = await axios.get(`http://localhost:5000/friends/${this.id}`);
                     this.friendsList = response.data;
                 } 
                 catch (err) 
@@ -70,6 +112,19 @@
                 catch (err) 
                 {
                     console.log(err);
+                }
+            },
+            async getMyShows() 
+            {
+                try 
+                {
+                    const response = await axios.get(`http://localhost:5000/mytvshowsid/${this.id}`);
+                    return response.data;
+                } 
+                catch (err) 
+                {
+                    console.log(err);
+                    return null;
                 }
             },
             async getapi(id) 

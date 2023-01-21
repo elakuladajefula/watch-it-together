@@ -138,9 +138,12 @@
         {
           const response = await axios.get(`http://localhost:5000/users/${this.id}`);
           this.invitations = response.data;
-          this.friendLogin = this.invitations[0].Login;
-          this.openPopup('New friend invitation from ' + this.friendLogin);
-          this.invitations.shift();
+          if (this.invitations != '')
+          {
+            this.friendLogin = this.invitations[0].Login;
+            this.openPopup('New friend invitation from ' + this.friendLogin);
+            this.invitations.shift();
+          }
         } 
         catch (err) 
         {

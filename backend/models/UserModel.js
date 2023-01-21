@@ -30,7 +30,10 @@ export const getUserID = (login, pass, result) =>
         }
         else
         {
-            results[1] = jwtSignUser(results[0]);
+            if (results[0] != null)
+            {
+                results[1] = jwtSignUser(results[0]);
+            }
             result(null, results);
         }
     })

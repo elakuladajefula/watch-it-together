@@ -19,7 +19,6 @@
     {
       return {
         currentPath: window.location.hash,
-        displayMenu: false,
       }
     },
     computed: 
@@ -27,6 +26,19 @@
       currentView() 
       {
         return routes[this.currentPath.slice(1) || '/'];
+      },
+      displayMenu() 
+      {
+        return localStorage.getItem('logged');
+      }
+    },
+    beforeCreate()
+    {
+      if(localStorage.getItem('user') === undefined || localStorage.getItem('user') === '')
+      {
+        localStorage.setItem('token', '');
+        localStorage.setItem('logged', false);
+        localStorage.setItem('user', '');
       }
     },
     mounted() 
@@ -60,7 +72,7 @@
 
 <template>
   <v-app>
-    <AppHeader :display="$store.state.isUserLoggedIn" @log-out='hideMenu()'/>
+    <AppHeader :shouldDisplay="displayMenu" @log-out='hideMenu()'/>
     <component :is="currentView"/>
   </v-app>
 </template>

@@ -1,7 +1,7 @@
 <script>
   export default 
   {
-    props: ['display'],
+    props: ['shouldDisplay'],
     name: 'AppHeader',
     emits: ['logOut'],
     data: () => 
@@ -15,15 +15,15 @@
             { title: 'Profile settings', link: '#/profile-settings' },
             { title: 'Log out', link: '#/', event: 'logOut' },
         ],
-    }), 
+    }),
   }
 </script>
 
 <template>
   <header class="appHeader">
-    <h1 class="title" :class="{'addPadding': display}">Watch it together</h1>
+    <h1 class="title" :class="{'addPadding': shouldDisplay === 'true'}">Watch it together</h1>
 
-    <v-menu bottom left v-if="display">
+    <v-menu bottom left v-if="shouldDisplay === 'true'">
       <template v-slot:activator="{ on, props }">
         <v-btn class="menuButton" dark icon v-bind="props" v-on="on">
           <v-icon>mdi-dots-vertical</v-icon>

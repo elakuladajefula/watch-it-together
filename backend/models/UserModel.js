@@ -4,8 +4,8 @@ const { sign, verify } = jwt;
 
 function jwtSignUser(user) 
 {
-    const ONE_HOUR = 60 * 60;
-    return sign(user, 'mySuperLongAndSecretStringNoOneKnows', { expiresIn: ONE_HOUR });
+    const ONE_DAY = 60 * 60 * 24;
+    return sign(user, 'mySuperLongAndSecretStringNoOneKnows', { expiresIn: ONE_DAY });
 }
 
 /**

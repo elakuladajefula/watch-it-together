@@ -15,10 +15,14 @@ export default new Vuex.Store(
         {
             state.token = token;
             state.isUserLoggedIn = !!(token);
+            localStorage.setItem('token', token);
+            localStorage.setItem('logged', state.isUserLoggedIn);
+            setTimeout(function(){ window.location.reload(); }, 10);
         },
         setUser (state, user) 
         {
             state.user = user;
+            localStorage.setItem('user', user);
         }
     },
     actions: 

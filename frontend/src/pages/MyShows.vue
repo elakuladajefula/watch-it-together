@@ -39,7 +39,7 @@
       {
         try 
         {
-          await axios({method: 'put', url: `http://localhost:5000/friends/${this.id}/${this.friendLogin}`, headers: {'Authorization': 'Bearer ' + this.$store.state.token} });
+          await axios({method: 'put', url: `http://localhost:5000/friends/${this.id}/${this.friendLogin}`, headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')} });
         } 
         catch (err) 
         {
@@ -57,7 +57,7 @@
       {
         try 
         {
-          await axios({method: 'put', url: `http://localhost:5000/friendstatus/${this.id}/${this.friendLogin}`, headers: {'Authorization': 'Bearer ' + this.$store.state.token} });
+          await axios({method: 'put', url: `http://localhost:5000/friendstatus/${this.id}/${this.friendLogin}`, headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')} });
         } 
         catch (err) 
         {
@@ -81,7 +81,7 @@
             {
               try 
               {
-                await axios({method: 'put', url: `http://localhost:5000/mytvshows/${this.id}/${show}`, headers: {'Authorization': 'Bearer ' + this.$store.state.token} });
+                await axios({method: 'put', url: `http://localhost:5000/mytvshows/${this.id}/${show}`, headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')} });
                 item.watched = false;
               } 
               catch (err)
@@ -93,7 +93,7 @@
             {
               try 
               {
-                await axios({method: 'put', url: `http://localhost:5000/tvshows/${this.id}/${show}`, headers: {'Authorization': 'Bearer ' + this.$store.state.token} });
+                await axios({method: 'put', url: `http://localhost:5000/tvshows/${this.id}/${show}`, headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')} });
                 item.watched = true;
               } 
               catch (err)
@@ -108,8 +108,8 @@
       {
         try 
         {
-          this.id = this.$store.state.user;
-          const response = await axios.get(`http://localhost:5000/mytvshows/${this.id}`, { headers: {Authorization: 'Bearer ' + this.$store.state.token} });
+          this.id = localStorage.getItem('user');
+          const response = await axios.get(`http://localhost:5000/mytvshows/${this.id}`, { headers: {Authorization: 'Bearer ' + localStorage.getItem('token')} });
           this.showsList = response.data;
           for(let i = 0; i < this.showsList.length; i++)
           {
@@ -136,7 +136,7 @@
       {
         try 
         {
-          const response = await axios.get(`http://localhost:5000/users/${this.id}`, { headers: {Authorization: 'Bearer ' + this.$store.state.token} });
+          const response = await axios.get(`http://localhost:5000/users/${this.id}`, { headers: {Authorization: 'Bearer ' + localStorage.getItem('token')} });
           this.invitations = response.data;
           if (this.invitations != '')
           {

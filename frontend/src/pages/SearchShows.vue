@@ -26,7 +26,7 @@
                     try 
                     {
                         this.userID = this.$store.state.user;
-                        const response = await axios.get(`http://localhost:5000/tvshows/${this.userID}/${this.showsList[i].id}`);
+                        const response = await axios.get(`http://localhost:5000/tvshows/${this.userID}/${this.showsList[i].id}`, { headers: {Authorization: 'Bearer ' + this.$store.state.token} });
                         if (response.data)
                         {
                             this.showsList[i].added = true;
@@ -61,7 +61,7 @@
                         {
                             try 
                             {
-                                await axios.delete(`http://localhost:5000/tvshows/${this.userID}/${id}`);
+                                await axios({method: 'delete', url: `http://localhost:5000/tvshows/${this.userID}/${id}`, headers: {'Authorization': 'Bearer ' + this.$store.state.token} });
                                 item.added = false;
                             } 
                             catch (err)
@@ -73,7 +73,7 @@
                         {
                             try 
                             {
-                                await axios.post(`http://localhost:5000/tvshows/${this.userID}/${id}`);
+                                await axios({method: 'post', url: `http://localhost:5000/tvshows/${this.userID}/${id}`, headers: {'Authorization': 'Bearer ' + this.$store.state.token} });
                                 item.added = true;
                             } 
                             catch (err)

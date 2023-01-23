@@ -58,7 +58,7 @@
                 {
                     try 
                     {
-                        const response = await axios.get(`http://localhost:5000/friendtvshows/${this.chosen[i]}`);
+                        const response = await axios.get(`http://localhost:5000/friendtvshows/${this.chosen[i]}`, { headers: {Authorization: 'Bearer ' + this.$store.state.token} });
                         
                         var temp = response.data;
                         var temp2 = [];
@@ -90,7 +90,7 @@
                 try 
                 {
                     this.id = this.$store.state.user;
-                    const response = await axios.get(`http://localhost:5000/friends/${this.id}`);
+                    const response = await axios.get(`http://localhost:5000/friends/${this.id}`, { headers: {Authorization: 'Bearer ' + this.$store.state.token} });
                     this.friendsList = response.data;
                 } 
                 catch (err) 
@@ -102,7 +102,7 @@
             {
                 try 
                 {
-                    const response = await axios.get(`http://localhost:5000/friendtvshows/${name}`);
+                    const response = await axios.get(`http://localhost:5000/friendtvshows/${name}`, { headers: {Authorization: 'Bearer ' + this.$store.state.token} });
                     this.friendShowsList = response.data;
                     for(let i = 0; i < this.friendShowsList.length; i++)
                     {
@@ -118,7 +118,7 @@
             {
                 try 
                 {
-                    const response = await axios.get(`http://localhost:5000/mytvshowsid/${this.id}`);
+                    const response = await axios.get(`http://localhost:5000/mytvshowsid/${this.id}`, { headers: {Authorization: 'Bearer ' + this.$store.state.token} });
                     return response.data;
                 } 
                 catch (err) 

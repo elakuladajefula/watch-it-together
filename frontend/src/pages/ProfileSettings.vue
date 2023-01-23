@@ -89,7 +89,7 @@
                         this.hash(this.newPassword).then(async (hex2) => 
                         {
                             const id = this.$store.state.user;
-                            const response = await axios.put(`http://localhost:5000/users/${hex2}/${id}/${hex}`);
+                            const response = await axios({method: 'put', url: `http://localhost:5000/users/${hex2}/${id}/${hex}`, headers: {'Authorization': 'Bearer ' + this.$store.state.token} });
                             if (response.data.affectedRows > 0)
                             {
                                 this.openPopup('Password changed successfully');

@@ -39,7 +39,7 @@
       {
         try 
         {
-          await axios.put(`http://localhost:5000/friends/${this.id}/${this.friendLogin}`);
+          await axios({method: 'put', url: `http://localhost:5000/friends/${this.id}/${this.friendLogin}`, headers: {'Authorization': 'Bearer ' + this.$store.state.token} });
         } 
         catch (err) 
         {
@@ -57,7 +57,7 @@
       {
         try 
         {
-          await axios.put(`http://localhost:5000/friendstatus/${this.id}/${this.friendLogin}`);
+          await axios({method: 'put', url: `http://localhost:5000/friendstatus/${this.id}/${this.friendLogin}`, headers: {'Authorization': 'Bearer ' + this.$store.state.token} });
         } 
         catch (err) 
         {
@@ -81,7 +81,7 @@
             {
               try 
               {
-                await axios.put(`http://localhost:5000/mytvshows/${this.id}/${show}`);
+                await axios({method: 'put', url: `http://localhost:5000/mytvshows/${this.id}/${show}`, headers: {'Authorization': 'Bearer ' + this.$store.state.token} });
                 item.watched = false;
               } 
               catch (err)
@@ -93,7 +93,7 @@
             {
               try 
               {
-                await axios.put(`http://localhost:5000/tvshows/${this.id}/${show}`);
+                await axios({method: 'put', url: `http://localhost:5000/tvshows/${this.id}/${show}`, headers: {'Authorization': 'Bearer ' + this.$store.state.token} });
                 item.watched = true;
               } 
               catch (err)
@@ -109,7 +109,7 @@
         try 
         {
           this.id = this.$store.state.user;
-          const response = await axios.get(`http://localhost:5000/mytvshows/${this.id}`);
+          const response = await axios.get(`http://localhost:5000/mytvshows/${this.id}`, { headers: {Authorization: 'Bearer ' + this.$store.state.token} });
           this.showsList = response.data;
           for(let i = 0; i < this.showsList.length; i++)
           {
@@ -136,7 +136,7 @@
       {
         try 
         {
-          const response = await axios.get(`http://localhost:5000/users/${this.id}`);
+          const response = await axios.get(`http://localhost:5000/users/${this.id}`, { headers: {Authorization: 'Bearer ' + this.$store.state.token} });
           this.invitations = response.data;
           if (this.invitations != '')
           {

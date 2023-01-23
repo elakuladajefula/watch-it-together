@@ -32,7 +32,7 @@
             {
                 try 
                 {
-                    await axios.post(`http://localhost:5000/friends/${this.id}/${friendName}`);
+                    await axios({method: 'post', url: `http://localhost:5000/friends/${this.id}/${friendName}`, headers: {'Authorization': 'Bearer ' + this.$store.state.token} });
                     this.openPopup('Invitation sent successfully');
                 } 
                 catch (err)
@@ -46,12 +46,12 @@
                 {
                     this.friendsList = [];
                     this.id = this.$store.state.user;
-                    const response = await axios.get(`http://localhost:5000/user/${userName}/${this.id}`);
+                    const response = await axios.get(`http://localhost:5000/user/${userName}/${this.id}`, { headers: {Authorization: 'Bearer ' + this.$store.state.token} });
                     var logins = response.data;
                     try 
                     {
                         logins.forEach( async element => {
-                            const response2 = await axios.get(`http://localhost:5000/friendstatus/${this.id}/${element.Login}`);
+                            const response2 = await axios.get(`http://localhost:5000/friendstatus/${this.id}/${element.Login}`, { headers: {Authorization: 'Bearer ' + this.$store.state.token} });
                             this.friendsList.push({"name": element.Login, "added": response2.data.Status});
                         });
 

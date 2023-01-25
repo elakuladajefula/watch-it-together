@@ -43,8 +43,10 @@
                 // check what common elements have those arrays
                 for (var i = 0; i < this.chosenFriendsShows.length; i++)
                 {
-                    this.showsList = this.showsList.filter(x => this.chosenFriendsShows[i].indexOf(x) !== -1)
+                    this.showsList = this.showsList.filter(x => this.chosenFriendsShows[i].indexOf(x) !== -1);
                 }
+
+                //get shows data from API
                 for(let j = 0; j < this.showsList.length; j++)
                 {
                     this.showsList[j] = await this.getapi(this.showsList[j]);

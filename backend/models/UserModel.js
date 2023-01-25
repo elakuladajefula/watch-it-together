@@ -1,6 +1,6 @@
 import db from '../config/database.js';
 import jwt from 'jsonwebtoken';
-const { sign, verify } = jwt;
+const { sign } = jwt;
 
 function jwtSignUser(user) 
 {

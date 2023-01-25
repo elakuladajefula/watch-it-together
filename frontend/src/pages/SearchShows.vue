@@ -15,8 +15,43 @@
             showsList: [],
             userID: '',
         }),
+        mounted()
+        {
+            this.getPopular();
+        },
         methods: 
         {
+            async getPopular()
+            {
+                const randomPage = Math.floor(Math.random() * 50);
+                const api_url = "https://www.episodate.com/api/most-popular?page=" + randomPage;
+                this.showsList = await this.getapi(api_url);
+                for (let i = 0; i < this.showsList.length; i++)
+                {
+                    try 
+                    {
+                        if(this.showsList[i].image_thumbnail_path === "https://static.episodate.com")
+                        {
+                            this.showsList[i].image_thumbnail_path = "https://static.episodate.com/images/no-image.png";
+                        }
+                        this.userID = localStorage.getItem('user');
+                        const response = await axios.get(`http://localhost:5000/tvshows/${this.userID}/${this.showsList[i].id}`, { headers: {Authorization: 'Bearer ' + localStorage.getItem('token')} });
+                        if (response.data)
+                        {
+                            this.showsList = this.showsList.filter(x => x !== this.showsList[i]);
+                        }
+                        else
+                        {
+                            this.showsList[i].added = false;
+                        }
+                    } 
+                    catch (err)
+                    {
+                        console.log(err);
+                    }
+                }
+            },
+
             async searchShows()
             {
                 const api_url = "https://www.episodate.com/api/search?q=";
@@ -25,7 +60,6 @@
                 {
                     try 
                     {
-                        this.userID = localStorage.getItem('user');
                         const response = await axios.get(`http://localhost:5000/tvshows/${this.userID}/${this.showsList[i].id}`, { headers: {Authorization: 'Bearer ' + localStorage.getItem('token')} });
                         if (response.data)
                         {
@@ -102,7 +136,6 @@
         </v-btn>
         <div class="showsContainer">
             <v-list-item v-for="(item, i) in showsList" :key = "i">
-                <!-- showId będzie pobierane z API, wszystko inne w sumie też -->
                 <ShowTemplate 
                     :title = item.name
                     :firstEpisode = item.start_date

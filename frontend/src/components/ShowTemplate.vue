@@ -36,7 +36,7 @@
     {
         margin: 10px;
         width: 260px;
-        height: 400px;
+        height: auto;
         text-align: center;
         color: white;
         position: relative;
@@ -52,7 +52,7 @@
     }
     .showBg 
     {
-        height: 98%;
+        height: 100%;
     }
     .imageWithMask:hover .showBg 
     {

@@ -14,6 +14,7 @@
             search: '',
             showsList: [],
             userID: '',
+            counter: 1,
         }),
         mounted()
         {
@@ -34,11 +35,13 @@
                         {
                             this.showsList[i].image_thumbnail_path = "https://static.episodate.com/images/no-image.png";
                         }
+
                         this.userID = localStorage.getItem('user');
                         const response = await axios.get(`http://localhost:5000/tvshows/${this.userID}/${this.showsList[i].id}`, { headers: {Authorization: 'Bearer ' + localStorage.getItem('token')} });
+
                         if (response.data)
                         {
-                            this.showsList = this.showsList.filter(x => x !== this.showsList[i]);
+                            this.showsList = this.showsList.filter(x => { x !== this.showsList[i] });
                         }
                         else
                         {
@@ -48,6 +51,14 @@
                     catch (err)
                     {
                         console.log(err);
+                    }
+                }
+                if (this.showsList.length === 0)
+                {
+                    this.counter++;
+                    if(this.counter <= 50)
+                    {
+                        this.getPopular();
                     }
                 }
             },

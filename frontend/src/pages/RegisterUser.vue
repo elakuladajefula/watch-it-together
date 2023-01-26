@@ -1,6 +1,7 @@
 <script>
     import MyPopup from '../components/MyPopup';
     import axios from "axios";
+    import bcrypt from "bcryptjs";
 
     export default
     {
@@ -41,7 +42,7 @@
                         const response = await axios.post(`http://localhost:5000/users/${this.login}/${hex}`);
                         if (response.data.affectedRows === 1)
                         {
-                            const response = await axios.get(`http://localhost:5000/users/${this.login}/${hex}`);
+                            const response = await axios.get(`http://localhost:5000/users/${this.login}`);
                             if (response.data != '')
                             {
                                 this.$store.dispatch('setToken', response.data[1]);
@@ -90,13 +91,8 @@
             },
             async hash(string)
             {
-                const utf8 = new TextEncoder().encode(string);
-                const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
-                const hashArray = Array.from(new Uint8Array(hashBuffer));
-                const hashHex = hashArray
-                    .map((bytes) => bytes.toString(16).padStart(2, '0'))
-                    .join('');
-                return hashHex;
+                const salt = bcrypt.genSaltSync(10);
+                return bcrypt.hashSync(string, salt);
             },
         },
     }

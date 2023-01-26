@@ -1,8 +1,38 @@
-import { getUserID, getInvitations, getRegistered, changeUserSettings, getUserByName } from "../models/UserModel.js";
+import { getUserID, getInvitations, getRegistered, changeUserSettings, getUserByName, getUserPassword, getUserPasswordByID } from "../models/UserModel.js";
 
 export const logInUser = (req, res) => 
 {
-    getUserID(req.params.login, req.params.pass, (err, results) =>
+    getUserID(req.params.login, (err, results) =>
+    {
+        if (err)
+        {
+            res.send(err);
+        }
+        else
+        {
+            res.json(results);
+        }
+    })
+}
+
+export const verifyUser = (req, res) => 
+{
+    getUserPassword(req.params.login, (err, results) =>
+    {
+        if (err)
+        {
+            res.send(err);
+        }
+        else
+        {
+            res.json(results);
+        }
+    })
+}
+
+export const verifyUserByID = (req, res) => 
+{
+    getUserPasswordByID(req.params.id, (err, results) =>
     {
         if (err)
         {
@@ -47,7 +77,7 @@ export const registerUser = (req, res) =>
 
 export const changePassword = (req, res) => 
 {
-    changeUserSettings(req.params.newPass, req.params.id, req.params.oldPass, (err, results) =>
+    changeUserSettings(req.params.newPass, req.params.id, (err, results) =>
     {
         if (err)
         {

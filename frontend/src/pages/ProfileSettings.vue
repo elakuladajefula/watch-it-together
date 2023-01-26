@@ -1,6 +1,7 @@
 <script>
     import MyPopup from '../components/MyPopup';
     import axios from "axios";
+    import bcrypt from "bcryptjs";
 
     export default
     {
@@ -80,26 +81,31 @@
             {
                 this.showPopup = false;
             },
-            changePassword()
+            async changePassword()
             {
                 try 
                 {
-                    this.hash(this.oldPassword).then(async (hex) => 
+                    const id = localStorage.getItem('user');
+                    const pass2Check = await axios.get(`http://localhost:5000/verifyUsersByID/${id}`);
+                    if(bcrypt.compareSync(this.oldPassword, pass2Check.data.Password))
                     {
-                        this.hash(this.newPassword).then(async (hex2) => 
+                        this.hash(this.newPassword).then(async (pass) => 
                         {
-                            const id = localStorage.getItem('user');
-                            const response = await axios({method: 'put', url: `http://localhost:5000/users/${hex2}/${id}/${hex}`, headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')} });
+                            const response = await axios({method: 'put', url: `http://localhost:5000/users/${pass}/${id}`, headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')} });
                             if (response.data.affectedRows > 0)
                             {
                                 this.openPopup('Password changed successfully');
                             }
                             else
                             {
-                                this.openPopup('Incorrect old password');
+                                this.openPopup('Something went wrong. Please try again.');
                             }
                         })
-                    });
+                    }
+                    else
+                    {
+                        this.openPopup('Incorrect old password');
+                    }
                 } 
                 catch (err) 
                 {
@@ -108,13 +114,8 @@
             },
             async hash(string)
             {
-                const utf8 = new TextEncoder().encode(string);
-                const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
-                const hashArray = Array.from(new Uint8Array(hashBuffer));
-                const hashHex = hashArray
-                    .map((bytes) => bytes.toString(16).padStart(2, '0'))
-                    .join('');
-                return hashHex;
+                const salt = bcrypt.genSaltSync(10);
+                return bcrypt.hashSync(string, salt);
             },
         },
     }

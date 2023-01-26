@@ -9,16 +9,14 @@ function jwtSignUser(user)
 }
 
 /**
- * Logging in with correct credentials returns userID
- * Wrong credentials return error
+ * Return user ID and authentication token
  * 
  * @param {*} login user login
- * @param {*} pass user password
  * @param {*} result
  */
-export const getUserID = (login, pass, result) => 
+export const getUserID = (login, result) => 
 {
-    db.query("SELECT ID FROM users WHERE Login = ? AND Password = ?", [login, pass], (err, results) =>
+    db.query("SELECT ID FROM users WHERE Login = ?", [login], (err, results) =>
     {
         if (err)
         {
@@ -32,6 +30,50 @@ export const getUserID = (login, pass, result) =>
                 results[1] = jwtSignUser(results[0]);
             }
             result(null, results);
+        }
+    })
+}
+
+/**
+ * Return user password to verify it
+ * 
+ * @param {*} login 
+ * @param {*} result 
+ */
+export const getUserPassword = (login, result) => 
+{
+    db.query("SELECT Password FROM users WHERE Login = ?", [login], (err, results) =>
+    {
+        if (err)
+        {
+            console.log(err);
+            result(err, null);
+        }
+        else
+        {
+            result(null, results[0]);
+        }
+    })
+}
+
+/**
+ * Return user old password to verify before changing it
+ * 
+ * @param {*} ID 
+ * @param {*} result 
+ */
+export const getUserPasswordByID = (id, result) => 
+{
+    db.query("SELECT Password FROM users WHERE ID = ?", [id], (err, results) =>
+    {
+        if (err)
+        {
+            console.log(err);
+            result(err, null);
+        }
+        else
+        {
+            result(null, results[0]);
         }
     })
 }
@@ -83,16 +125,15 @@ export const getRegistered = (login, pass, result) =>
 }
 
 /**
- * If login and old password are correct, change password to newPass
+ * Change user password to newPass
  * 
  * @param {*} newPass new user password
  * @param {*} login user login
- * @param {*} oldPass old user password
  * @param {*} result 
  */
-export const changeUserSettings = (newPass, id, oldPass, result) => 
+export const changeUserSettings = (newPass, id, result) => 
 {
-    db.query("UPDATE users SET Password = ? WHERE ID = ? AND Password = ?", [newPass, id, oldPass], (err, results) =>
+    db.query("UPDATE users SET Password = ? WHERE ID = ?", [newPass, id], (err, results) =>
     {
         if (err)
         {

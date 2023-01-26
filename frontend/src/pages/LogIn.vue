@@ -1,6 +1,7 @@
 <script>
     import MyPopup from '../components/MyPopup';
     import axios from "axios";
+    import bcrypt from "bcryptjs";
 
     export default
     {
@@ -43,24 +44,32 @@
                     return 'mdi-eye-off';
                 }
             },
-            loginUser()
+            async loginUser()
             {
                 try 
                 {
-                    this.hash(this.password).then(async (hex) => 
+                    const pass2Check = await axios.get(`http://localhost:5000/verifyUsers/${this.login}`);
+                    if (pass2Check.data.length != '')
                     {
-                        const response = await axios.get(`http://localhost:5000/users/${this.login}/${hex}`);
-                        if (response.data != '')
+                        if(bcrypt.compareSync(this.password, pass2Check.data.Password))
                         {
-                            this.$store.dispatch('setToken', response.data[1]);
-                            this.$store.dispatch('setUser', response.data[0].ID);
-                            window.location = '#/my-shows';
+                            const response = await axios.get(`http://localhost:5000/users/${this.login}`);
+                            if (response.data != '')
+                            {
+                                this.$store.dispatch('setToken', response.data[1]);
+                                this.$store.dispatch('setUser', response.data[0].ID);
+                                window.location = '#/my-shows';
+                            }  
                         }
                         else
                         {
                             this.openPopup("Wrong credentials");
                         }
-                    });
+                    }
+                    else
+                    {
+                        this.openPopup("User doesn't exist");
+                    }
                 } 
                 catch (err)
                 {
@@ -75,16 +84,6 @@
             closePopup()
             {
                 this.showPopup = false;
-            },
-            async hash(string)
-            {
-                const utf8 = new TextEncoder().encode(string);
-                const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
-                const hashArray = Array.from(new Uint8Array(hashBuffer));
-                const hashHex = hashArray
-                    .map((bytes) => bytes.toString(16).padStart(2, '0'))
-                    .join('');
-                return hashHex;
             },
         },
     }

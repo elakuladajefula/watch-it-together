@@ -1,15 +1,18 @@
 import express from "express";
 import jwt from 'jsonwebtoken';
-import { logInUser, showInvitations, registerUser, changePassword, searchFriends } from "../controllers/user.js";
+import { logInUser, showInvitations, registerUser, changePassword, searchFriends, verifyUser, verifyUserByID } from "../controllers/user.js";
 import { addShow, removeShow, updateShow, listShows, listMyShows, listFriendShows, unupdateShow, getStatus } from "../controllers/show.js";
 import { acceptFriend, addFriend, rejectFriend, showFriends, showStatus } from "../controllers/friend.js";
 
 const router = express.Router();
 
-router.get("/users/:login/:pass", logInUser);
+router.get("/verifyUsers/:login", verifyUser);
+router.get("/verifyUsersByID/:id", verifyUserByID);
+
+router.get("/users/:login", logInUser);
 router.get("/users/:id", authenticateToken, showInvitations);
 router.post("/users/:login/:pass", registerUser);
-router.put("/users/:newPass/:id/:oldPass", authenticateToken, changePassword);
+router.put("/users/:newPass/:id", authenticateToken, changePassword);
 
 router.get("/user/:name/:id", authenticateToken, searchFriends);
 

@@ -59,6 +59,13 @@
             },
             async getSelectedUsersShows()
             {
+                // get user's shows and put into array
+                var list = await this.getMyShows();
+                for (var j = 0; j < list.length; j++)
+                {
+                    this.showsList[j] = list[j].ShowID;
+                }
+                
                 // get all selected users' shows and put into arrays
                 for (var i = 0; i < this.chosen.length; i++)
                 {
@@ -78,13 +85,6 @@
                     {
                         console.log(err);
                     }
-                }
-
-                // get user's shows and put into array
-                var list = await this.getMyShows();
-                for (var j = 0; j < list.length; j++)
-                {
-                    this.showsList[j] = list[j].ShowID;
                 }
             },
             goBackToMyFriends()

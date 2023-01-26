@@ -50,6 +50,10 @@
                 for(let j = 0; j < this.showsList.length; j++)
                 {
                     this.showsList[j] = await this.getapi(this.showsList[j]);
+                    if(this.showsList[j].image_thumbnail_path === "https://static.episodate.com")
+                    {
+                        this.showsList[j].image_thumbnail_path = "https://static.episodate.com/images/no-image.png";
+                    }
                 }
                 this.selectComponent = 'commonShows';
             },
@@ -109,6 +113,10 @@
                     for(let i = 0; i < this.friendShowsList.length; i++)
                     {
                         this.friendShowsList[i] = await this.getapi(this.friendShowsList[i].ShowID);
+                        if(this.friendShowsList[i].image_thumbnail_path === "https://static.episodate.com")
+                        {
+                            this.friendShowsList[i].image_thumbnail_path = "https://static.episodate.com/images/no-image.png";
+                        }
                     }
                 } 
                 catch (err) 

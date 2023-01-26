@@ -116,12 +116,20 @@
             if(this.showsList[i].ShowStatus === 'ADDED')
             {
               this.showsList[i] = await this.getapi(this.showsList[i].ShowID);
+              if(this.showsList[i].image_thumbnail_path === "https://static.episodate.com")
+              {
+                this.showsList[i].image_thumbnail_path = "https://static.episodate.com/images/no-image.png";
+              }
               this.showsList[i].ShowStatus = 'ADDED'
               this.showsList[i].watched = false;
             }
             else
             {
               this.showsList[i] = await this.getapi(this.showsList[i].ShowID);
+              if(this.showsList[i].image_thumbnail_path === "https://static.episodate.com")
+              {
+                this.showsList[i].image_thumbnail_path = "https://static.episodate.com/images/no-image.png";
+              }
               this.showsList[i].ShowStatus = 'WATCHED'
               this.showsList[i].watched = true;
             }

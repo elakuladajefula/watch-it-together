@@ -69,6 +69,10 @@
                 this.showsList = await this.getapi(api_url);
                 for (let i = 0; i < this.showsList.length; i++)
                 {
+                    if(this.showsList[i].image_thumbnail_path === "https://static.episodate.com")
+                    {
+                        this.showsList[i].image_thumbnail_path = "https://static.episodate.com/images/no-image.png";
+                    }
                     try 
                     {
                         const response = await axios.get(`http://localhost:5000/tvshows/${this.userID}/${this.showsList[i].id}`, { headers: {Authorization: 'Bearer ' + localStorage.getItem('token')} });

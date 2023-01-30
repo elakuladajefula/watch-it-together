@@ -54,6 +54,10 @@
     {
         height: 100%;
     }
+    .showText
+    {
+        font-size: larger;
+    }
     .imageWithMask:hover .showBg 
     {
         background-color: rgba(180, 180, 180, 0.8);
